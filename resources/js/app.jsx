@@ -5,6 +5,26 @@ import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
+/* import the fontawesome core */
+import {
+    library
+} from '@fortawesome/fontawesome-svg-core'
+
+/* import font awesome icon component */
+
+import {
+    fas
+} from '@fortawesome/free-solid-svg-icons'
+import {
+    far
+} from '@fortawesome/free-regular-svg-icons'
+import {
+    fab
+} from '@fortawesome/free-brands-svg-icons'
+/* add icons to the library */
+library.add(fas,far,fab)
+
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
