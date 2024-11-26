@@ -45,6 +45,15 @@ export default function Authenticated({ user, header, children }) {
                         <span>Dashboard</span>
                     </NavLink>
                    </li>
+                   <li className="w-full h-auto">
+                   <NavLink
+                        href={route("Penyakit.index")}
+                        active={route().current("Penyakit.index")}
+                    >
+                        <FontAwesomeIcon icon="fa-solid fa-house" />
+                        <span>Data Penyakit</span>
+                    </NavLink>
+                   </li>
 
                 </ul>
             </section>

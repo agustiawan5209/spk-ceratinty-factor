@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PenyakitController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::group(['prefix' => 'penyakit', 'as' => 'Penyakit.'], function () {
+        Route::controller(PenyakitController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah', 'create')->name('create');
+            Route::get('/edit', 'edit')->name('edit');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/update', 'update')->name('update');
+            Route::delete('/destroy', 'destroy')->name('destroy');
+        });
+    });
 });
 
 require __DIR__.'/auth.php';
