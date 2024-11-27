@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Slider from "react-slick";
 
-export default function ShowPotensiDaerah({ auth, berita }) {
+export default function ShowPotensiDaerah({ auth, penyakit }) {
     const settings = {
         dots: true,
         infinite: true,
@@ -30,7 +30,7 @@ export default function ShowPotensiDaerah({ auth, berita }) {
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
                         <section className="py-8 bg-white">
                             <Link
-                                href={route("PotensiDaerah.index")}
+                                href={route("Penyakit.index")}
                                 className="pl-10"
                             >
                                 <PrimaryButton type="button" className="pl-4">
@@ -43,46 +43,32 @@ export default function ShowPotensiDaerah({ auth, berita }) {
                                     {/* Information Section */}
                                     <div className="mt-4">
                                         <h1 className="text-3xl font-semibold text-gray-900">
-                                            {berita.judul}
+                                            {penyakit.judul}
                                         </h1>
                                         <div className="space-y-4 mt-4">
                                             <InfoCard
-                                                label="Topik"
-                                                value={berita.topik}
+                                                label="Kode"
+                                                value={penyakit.kode}
                                             />
                                             <InfoCard
-                                                label="Kategori"
-                                                value={berita.kategori}
+                                                label="Nama Penyakit"
+                                                value={penyakit.nama}
                                             />
                                             <InfoCard
-                                                label="Penulis"
-                                                value={berita.penulis}
-                                            />
-                                            <InfoCard
-                                                label="Tanggal"
-                                                value={berita.tgl}
-                                            />
-                                            <InfoCard
-                                                label="Status"
-                                                value={berita.status}
+                                                label="Keterangan Penyakit"
+                                                value={penyakit.keterangan}
                                             />
                                         </div>
 
-                                        <hr className="my-6 border-gray-200" />
-
-                                        <Section
-                                            title="Konten Berita"
-                                            content={berita.konten}
-                                        />
                                     </div>
 
                                     {/* Carousel Section */}
-                                 {berita.thumbnail != null &&
+                                 {penyakit.thumbnail != null &&
                                     <div className="w-full">
                                     <div className="w-full bg-gray-800 p-4 md:p-8 rounded-lg shadow-lg">
                                         <img
-                                            src={berita.thumbnail_path}
-                                            alt={`Slide ${berita.judul}`}
+                                            src={penyakit.thumbnail_path}
+                                            alt={`Slide ${penyakit.judul}`}
                                             className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
                                         />
                                     </div>

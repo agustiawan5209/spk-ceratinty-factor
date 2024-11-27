@@ -18,47 +18,53 @@ export default function Authenticated({ user, header, children }) {
             setMasterMenu(true);
         }
     };
-    useEffect(()=>{
+    useEffect(() => {
         // if(route().current('Dusun.index') || route().current('Kategori.index') || route().current('Topik.index'))
         //     setMasterMenu(true)
-    })
+    });
     return (
-        <div className="min-h-screen bg-gray-100 flex">
+        <div className="min-h-screen bg-gray-100 flex flex-1">
             <FlashMessage />
 
             <section
                 id="sidebar"
-                className="hidden md:block md:w-[20%] min-h-screen bg-gray-800"
+                className="hidden md:block fixed md:w-[20%] max-w-xs min-h-screen bg-gray-800"
             >
-                <div className="w-full py-4 flex justify-center">
-                    <div className="w-20 h-auto text-white">
-                        <ApplicationLogo />
+                <nav className="w-full h-full">
+                    <div className="w-full py-4 flex justify-center">
+                        <div className="w-20 h-auto text-white">
+                            <ApplicationLogo />
+                        </div>
                     </div>
-                </div>
-                <ul className="w-full mt-10 px-2 block space-y-3 ">
-                   <li className="w-full h-auto">
-                   <NavLink
-                        href={route("dashboard")}
-                        active={route().current("dashboard")}
-                    >
-                        <FontAwesomeIcon icon="fa-solid fa-house" />
-                        <span>Dashboard</span>
-                    </NavLink>
-                   </li>
-                   <li className="w-full h-auto">
-                   <NavLink
-                        href={route("Penyakit.index")}
-                        active={route().current("Penyakit.index")}
-                    >
-                        <FontAwesomeIcon icon="fa-solid fa-house" />
-                        <span>Data Penyakit</span>
-                    </NavLink>
-                   </li>
-
-                </ul>
+                    <ul className="w-full mt-10 px-2 block space-y-3 ">
+                        <li className="w-full h-auto">
+                            <NavLink
+                                href={route("dashboard")}
+                                active={route().current("dashboard")}
+                            >
+                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <span>Dashboard</span>
+                            </NavLink>
+                        </li>
+                        <li className="w-full h-auto">
+                            <NavLink
+                                href={route("Penyakit.index")}
+                                active={
+                                    route().current("Penyakit.index") ||
+                                    route().current("Penyakit.create") ||
+                                    route().current("Penyakit.edit") ||
+                                    route().current("Penyakit.show")
+                                }
+                            >
+                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <span>Data Penyakit</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </nav>
             </section>
 
-            <main className="w-full">
+            <main className="w-full relative md:left-[20%] md:max-w-[80%]">
                 {header && (
                     <header className="bg-white shadow flex justify-around px-4">
                         <div className="max-w-sm mx-auto py-6 px-4 sm:px-6 lg:px-8">

@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/tambah', 'create')->name('create');
             Route::get('/edit', 'edit')->name('edit');
+            Route::get('/show', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
             Route::put('/update', 'update')->name('update');
             Route::delete('/destroy', 'destroy')->name('destroy');

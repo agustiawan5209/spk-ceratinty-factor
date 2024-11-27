@@ -36,7 +36,7 @@ class PenyakitController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Penyakit/Form', []);
     }
 
     /**
@@ -44,7 +44,13 @@ class PenyakitController extends Controller
      */
     public function store(StorePenyakitRequest $request)
     {
-        //
+        try {
+            $penyakit = Penyakit::create($request->all());
+
+            return redirect()->route('Penyakit.index')->with('success', 'Data Berhasil Di Tambahkan');
+        } catch (\Exception $e) {
+            return redirect()->route('Penyakit.index')->with('error', $e->getMessage() .' '. $e->getLine());
+        }
     }
 
     /**
@@ -52,7 +58,9 @@ class PenyakitController extends Controller
      */
     public function show(Penyakit $penyakit)
     {
-        //
+        return Inertia::render('Admin/Penyakit/Show', [
+            'penyakit' => $penyakit->find(Request::input('slug')),
+        ]);
     }
 
     /**
@@ -60,15 +68,22 @@ class PenyakitController extends Controller
      */
     public function edit(Penyakit $penyakit)
     {
-        //
+        return Inertia::render('Admin/Penyakit/Edit', [
+            'penyakit' => $penyakit->find(Request::input('slug')),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePenyakitRequest $request, Penyakit $penyakit)
-    {
-        //
+    public function update(UpdatePenyakitRequest $request, Penyakit $penyakit) {
+        try {
+            $penyakit = Penyakit::find(Request::input('slug'))->update($request->all());
+
+            return redirect()->route('Penyakit.index')->with('success', 'Data Berhasil Di Ubah');
+        } catch (\Exception $e) {
+            return redirect()->route('Penyakit.index')->with('error', $e->getMessage() .' '. $e->getLine());
+        }
     }
 
     /**
@@ -76,6 +91,12 @@ class PenyakitController extends Controller
      */
     public function destroy(Penyakit $penyakit)
     {
-        //
+        try {
+            $penyakit = Penyakit::find(Request::input('slug'))->delete();
+
+            return redirect()->route('Penyakit.index')->with('success', 'Data Berhasil Di Hapus');
+        } catch (\Exception $e) {
+            return redirect()->route('Penyakit.index')->with('error', $e->getMessage() .' '. $e->getLine());
+        }
     }
 }

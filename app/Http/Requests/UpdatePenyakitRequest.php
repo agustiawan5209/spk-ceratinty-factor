@@ -11,7 +11,7 @@ class UpdatePenyakitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdatePenyakitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "slug"=> "required|exists:penyakits,id",
+            "kode"=> "required|string|max:50|unique:penyakits,kode," . $this->slug . ",id",
+            "nama"=> "required|string|max:150|unique:penyakits,nama," . $this->slug . ",id",
         ];
     }
 }

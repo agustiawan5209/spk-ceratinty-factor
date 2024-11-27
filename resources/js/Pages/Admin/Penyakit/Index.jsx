@@ -210,20 +210,20 @@ export default function DaftarPenyakit({
                                                     key={item.id}
                                                     className="hover:bg-gray-50 transition duration-200"
                                                 >
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
                                                         {(penyakit.current_page -
                                                             1) *
                                                             penyakit.per_page +
                                                             index +
                                                             1}
                                                     </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
                                                         {item.kode}
                                                     </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
                                                         {item.nama}
                                                     </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
                                                         <div className="flex space-x-2">
                                                             {can.show && (
                                                                 <Link
@@ -235,9 +235,6 @@ export default function DaftarPenyakit({
                                                                     )}
                                                                     className="bg-blue-500 text-white p-1 rounded-md hover:underline"
                                                                 >
-                                                                    <span>
-                                                                        Detail
-                                                                    </span>{" "}
                                                                     <FontAwesomeIcon icon="fa-solid fa-eye" />
                                                                 </Link>
                                                             )}
@@ -251,10 +248,7 @@ export default function DaftarPenyakit({
                                                                     )}
                                                                     className="bg-green-500 text-white p-1 rounded-md hover:underline"
                                                                 >
-                                                                    <span>
-                                                                        edit
-                                                                    </span>{" "}
-                                                                    <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+                                                                    <FontAwesomeIcon icon="fa-solid fa-user" />
                                                                 </Link>
                                                             )}
                                                             {can.delete && (
@@ -267,9 +261,6 @@ export default function DaftarPenyakit({
                                                                     }
                                                                     className="bg-red-500 text-white p-1 rounded-md hover:underline"
                                                                 >
-                                                                    <span>
-                                                                        Hapus
-                                                                    </span>{" "}
                                                                     <FontAwesomeIcon icon="fa-solid fa-trash-can" />
                                                                 </button>
                                                             )}

@@ -11,7 +11,7 @@ class StorePenyakitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StorePenyakitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "kode"=> "required|string|max:50|unique:penyakits,kode",
+            "nama"=> "required|string|max:150|unique:penyakits,nama",
         ];
     }
 }
