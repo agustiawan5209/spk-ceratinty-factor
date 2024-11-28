@@ -25,6 +25,8 @@ class UpdatePenyakitRequest extends FormRequest
             "slug"=> "required|exists:penyakits,id",
             "kode"=> "required|string|max:50|unique:penyakits,kode," . $this->slug . ",id",
             "nama"=> "required|string|max:150|unique:penyakits,nama," . $this->slug . ",id",
+            'keterangan'=> 'required|string',
+            'pencegahan'=> 'required|string',
         ];
     }
 }

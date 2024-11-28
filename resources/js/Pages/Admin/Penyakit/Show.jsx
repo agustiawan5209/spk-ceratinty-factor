@@ -13,7 +13,6 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
         autoplay: true,
         autoplaySpeed: 3000,
     };
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -29,13 +28,13 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
                         <section className="py-8 bg-white relative">
-                        <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-blue-600">
-                            <Link href={route("Penyakit.index")}>
-                                <div className="w-full p-2 md:p-4 text-base text-white">
-                                    Kembali
-                                </div>
-                            </Link>
-                        </div>
+                            <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                                <Link href={route("Penyakit.index")}>
+                                    <div className="w-full p-2 md:p-4 text-base text-white">
+                                        Kembali
+                                    </div>
+                                </Link>
+                            </div>
                             <div className="max-w-screen-xl border-t-2 mt-4 px-6 py-4 mx-auto">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Information Section */}
@@ -52,45 +51,108 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
                                                 label="Nama Penyakit"
                                                 value={penyakit.nama}
                                             />
-                                            <InfoCard
-                                                label="Keterangan Penyakit"
-                                                value={penyakit.keterangan}
+                                            <CardDetail
+                                                title="Keterangan Penyakit"
+                                                content={penyakit.keterangan}
+                                            />
+                                            <CardDetail
+                                                title="Cara Pencegahan Penyakit"
+                                                content={penyakit.pencegahan}
                                             />
                                         </div>
-
                                     </div>
 
-                                 {/* Carousel Section */}
-                        <div className="w-full">
-                            <div className="w-full bg-secondary p-6 md:p-8 rounded-lg shadow-md">
-                                {penyakit.galeri.length > 1 ?
-                                <Slider {...settings}>
-                                {penyakit.galeri.map((image, index) => (
-                                    <div key={index}>
-                                        <img
-                                            src={image.image_path}
-                                            alt={`Slide ${image.caption}`}
-                                            className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
-                                        />
+                                    {/* Carousel Section */}
+                                    <div className="w-full">
+                                        <div className="w-full bg-secondary p-6 md:p-8 rounded-lg shadow-md">
+                                            {penyakit.galeri.length > 1 ? (
+                                                <Slider {...settings}>
+                                                    {penyakit.galeri.map(
+                                                        (image, index) => (
+                                                            <div key={index}>
+                                                                <img
+                                                                    src={
+                                                                        image.image_path
+                                                                    }
+                                                                    alt={`Slide ${image.caption}`}
+                                                                    className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
+                                                                />
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </Slider>
+                                            ) : (
+                                                penyakit.galeri.map(
+                                                    (image, index) => (
+                                                        <div key={index}>
+                                                            <img
+                                                                src={
+                                                                    image.image_path
+                                                                }
+                                                                alt={`Slide ${image.caption}`}
+                                                                className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
+                                                            />
+                                                        </div>
+                                                    )
+                                                )
+                                            )}
+                                        </div>
                                     </div>
-                                ))}
-                            </Slider>
-                            :  penyakit.galeri.map((image, index) => (
-                                <div key={index}>
-                                    <img
-                                        src={image.image_path}
-                                        alt={`Slide ${image.caption}`}
-                                        className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
-                                    />
-                                </div>
-                            ))
-                            }
-                            </div>
-
-                        </div>
                                 </div>
                             </div>
                         </section>
+
+                        {/* Table of Pengobatan */}
+                        <div className="p-6 overflow-x-auto">
+                            <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+                                <thead>
+                                    <tr className="bg-blue-600 text-white">
+                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
+                                            No.
+                                        </th>
+                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
+                                            Nama Penyakit
+                                        </th>
+                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
+                                            Keterangan Cara Pengobatan
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {penyakit.pengobatan.length > 0 ? (
+                                        penyakit.pengobatan.map(
+                                            (item, index) => (
+                                                <tr
+                                                    key={item.id}
+                                                    className="hover:bg-gray-50 transition duration-200"
+                                                >
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                        {index + 1}
+                                                    </td>
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                        {penyakit.nama}
+                                                    </td>
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                        {sanitizeText(
+                                                            item.keterangan
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        )
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                colSpan="3"
+                                                className="py-3 px-4 text-center text-sm text-gray -500"
+                                            >
+                                                Tidak ada data yang ditemukan.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,21 +162,30 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
 
 function InfoCard({ label, value }) {
     return (
-        <div className="py-3 px-6 text-md font-medium text-gray-800 bg-gray-100 rounded-lg border border-gray-300 shadow-sm hover:bg-gray-200">
+        <div className="px-3 py-2 border-b-2">
             <span className="font-semibold text-gray-700">{label}:</span>{" "}
-            <sp className="text-gray-600" dangerouslySetInnerHTML={{ __html: value }} />
+            <span
+                className="text-gray-600"
+                dangerouslySetInnerHTML={{ __html: value }}
+            />
         </div>
     );
 }
 
-function Section({ title, content }) {
+function CardDetail({ title, content }) {
+   return ( <div className="px-3 py-2 border-b-2 bg-blue-600">
+    <span className="font-semibold text-gray-100">{title}:</span>{" "}
+    <span
+        className="text-gray-100"
+        dangerouslySetInnerHTML={{ __html: content }}
+    />
+</div>);
+}
+function sanitizeText(content) {
     return (
-        <div className="mb-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-3">{title}</h2>
-            <p
-                className="text-gray-600 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: content }}
-            />
-        </div>
+        <p
+            className="text-gray-600 "
+            dangerouslySetInnerHTML={{ __html: content }}
+        />
     );
 }

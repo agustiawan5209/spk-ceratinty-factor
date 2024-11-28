@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePenyakitRequest;
 use App\Http\Requests\UpdatePenyakitRequest;
+use App\Models\Pengobatan;
 
 class PenyakitController extends Controller
 {
@@ -67,6 +68,13 @@ class PenyakitController extends Controller
                     ]);
                 }
             }
+
+            if($request->exists('keterangan_pengobatan')){
+                Pengobatan::create([
+                    'penyakit_id'=> $penyakit->id,
+                    'keterangan'=> $request->keterangan_pengobatan,
+                ]);
+            }
             return redirect()->route('Penyakit.index')->with('success', 'Data Berhasil Di Tambahkan');
         } catch (\Exception $e) {
             return redirect()->route('Penyakit.index')->with('error', $e->getMessage() .' '. $e->getLine());
@@ -79,7 +87,7 @@ class PenyakitController extends Controller
     public function show(Penyakit $penyakit)
     {
         return Inertia::render('Admin/Penyakit/Show', [
-            'penyakit' => $penyakit->with(['galeri'])->find(Request::input('slug')),
+            'penyakit' => $penyakit->with(['galeri' , 'pengobatan'])->find(Request::input('slug')),
         ]);
     }
 
@@ -89,7 +97,7 @@ class PenyakitController extends Controller
     public function edit(Penyakit $penyakit)
     {
         return Inertia::render('Admin/Penyakit/Edit', [
-            'penyakit' => $penyakit->with(['galeri'])->find(Request::input('slug')),
+            'penyakit' => $penyakit->with(['galeri' , 'pengobatan'])->find(Request::input('slug')),
         ]);
     }
 

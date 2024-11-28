@@ -15,9 +15,13 @@ class Penyakit extends Model
         "kode",
         "nama",
         "keterangan",
+        "pencegahan",
     ];
     public function galeri(){
         return $this->hasMany(GambarPenyakit::class, 'penyakit_id', 'id');
+    }
+    public function pengobatan(){
+        return $this->hasMany(Pengobatan::class, 'penyakit_id', 'id');
     }
 
     public function scopeFilterBySearch($query, $search)

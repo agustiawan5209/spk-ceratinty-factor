@@ -15,12 +15,13 @@ export default function EditPenyakit({ auth, penyakit }) {
         slug: penyakit.id,
         kode: penyakit.kode,
         keterangan: penyakit.keterangan,
+        pencegahan: penyakit.pencegahan,
         nama: penyakit.nama,
         images: initialGallery,
     });
 
     const quillRef = useRef(null);
-    const quillRefKontak = useRef(null);
+    const quillRefPencegahan = useRef(null);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -208,6 +209,35 @@ export default function EditPenyakit({ auth, penyakit }) {
                                 className="mt-2"
                             />
                         </div>
+                         {/* Description Input For Pencegahan using ReactQuill */}
+                         <div className="mb-4 col-span-full">
+                                    <InputLabel
+                                        htmlFor="pencegahan"
+                                        value="Keterangan Cara Pencegahan Penyakit"
+                                    />
+                                    <p className="text-xs text-gray-500">
+                                        catatan: Berikan detail cara Pencegahan
+                                        terkait penyakit ini.
+                                    </p>
+                                    <div className="w-full">
+                                        <ReactQuill
+                                            ref={quillRefPencegahan} // Menggunakan ref di sini
+                                            theme="snow"
+                                            value={data.pencegahan}
+                                            onChange={(value) =>
+                                                setData(
+                                                    "pencegahan",
+                                                    value
+                                                )
+                                            }
+                                            className="mt-1"
+                                        />
+                                    </div>
+                                    <InputError
+                                        message={errors.pencegahan}
+                                        className="mt-2"
+                                    />
+                                </div>
                             <div className="col-span-full flex justify-center mt-6">
                                 <PrimaryButton disabled={processing}>
                                     Simpan

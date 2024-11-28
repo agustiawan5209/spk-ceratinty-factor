@@ -24,6 +24,8 @@ class StorePenyakitRequest extends FormRequest
         return [
             "kode"=> "required|string|max:50|unique:penyakits,kode",
             "nama"=> "required|string|max:150|unique:penyakits,nama",
+            'keterangan'=> 'required|string',
+            'pencegahan'=> 'required|string',
         ];
     }
 }

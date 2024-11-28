@@ -13,10 +13,13 @@ export default function FormPenyakit({ auth }) {
         kode: "",
         nama: "",
         keterangan: "",
+        keterangan_pengobatan: "",
+        pencegahan: "",
         images: [], // State untuk menyimpan file gambar
     });
     const quillRef = useRef(null);
-    const quillRefKontak = useRef(null);
+    const quillRefPengobatan = useRef(null);
+    const quillRefPencegahan = useRef(null);
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -137,7 +140,10 @@ export default function FormPenyakit({ auth }) {
                                             ))}
                                         </div>
                                     </div>
-                                    <p className="text-xs text-gray-500">Keterangan: Anda Dapat Menyimpan Lebih Dari Satu Gambar</p>
+                                    <p className="text-xs text-gray-500">
+                                        Keterangan: Anda Dapat Menyimpan Lebih
+                                        Dari Satu Gambar
+                                    </p>
                                 </div>
                                 <div className="col-span-2">
                                     <InputLabel
@@ -190,28 +196,91 @@ export default function FormPenyakit({ auth }) {
                                     />
                                 </div>
 
-                        {/* Description Input using ReactQuill */}
-                        <div className="mb-4 col-span-full">
-                            <InputLabel
-                                htmlFor="keterangan"
-                                value="Keterangan "
-                            />
-                            <div className="w-full">
-                            <ReactQuill
-                                ref={quillRef} // Menggunakan ref di sini
-                                theme="snow"
-                                value={data.keterangan}
-                                onChange={(value) =>
-                                    setData("keterangan", value)
-                                }
-                                className="mt-1"
-                            />
-                            </div>
-                            <InputError
-                                message={errors.keterangan}
-                                className="mt-2"
-                            />
-                        </div>
+                                {/* Description Input using ReactQuill */}
+                                <div className="mb-4 col-span-full">
+                                    <InputLabel
+                                        htmlFor="keterangan"
+                                        value="Keterangan "
+                                    />
+                                    <div className="w-full">
+                                        <ReactQuill
+                                            ref={quillRef} // Menggunakan ref di sini
+                                            theme="snow"
+                                            value={data.keterangan}
+                                            onChange={(value) =>
+                                                setData("keterangan", value)
+                                            }
+                                            className="mt-1"
+                                        />
+                                    </div>
+                                    <InputError
+                                        message={errors.keterangan}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                {/* Description Input For Pencegahan using ReactQuill */}
+                                <div className="mb-4 col-span-full">
+                                    <InputLabel
+                                        htmlFor="pencegahan"
+                                        value="Keterangan Cara Pencegahan Penyakit"
+                                    />
+                                    <p className="text-xs text-gray-500">
+                                        catatan: Berikan detail cara Pencegahan
+                                        terkait penyakit ini.
+                                    </p>
+                                    <div className="w-full">
+                                        <ReactQuill
+                                            ref={quillRefPencegahan} // Menggunakan ref di sini
+                                            theme="snow"
+                                            value={data.pencegahan}
+                                            onChange={(value) =>
+                                                setData(
+                                                    "pencegahan",
+                                                    value
+                                                )
+                                            }
+                                            className="mt-1"
+                                        />
+                                    </div>
+                                    <InputError
+                                        message={errors.pencegahan}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <br />
+                                {/* Description Input For Pengobatan using ReactQuill */}
+                                <div className="mb-4 col-span-full">
+                                    <InputLabel
+                                        htmlFor="keterangan_pengobatan"
+                                        value="Keterangan Cara Pengobatan"
+                                    />
+                                    <p className="text-xs text-gray-500">
+                                        catatan: Berikan detail cara pengobatan
+                                        terkait penyakit ini. anda dapat
+                                        menambah cara pengobatan juga di menu
+                                        pengobatan
+                                    </p>
+                                    <div className="w-full">
+                                        <ReactQuill
+                                            ref={quillRefPengobatan} // Menggunakan ref di sini
+                                            theme="snow"
+                                            value={data.keterangan_pengobatan}
+                                            onChange={(value) =>
+                                                setData(
+                                                    "keterangan_pengobatan",
+                                                    value
+                                                )
+                                            }
+                                            className="mt-1"
+                                        />
+                                    </div>
+                                    <InputError
+                                        message={errors.keterangan_pengobatan}
+                                        className="mt-2"
+                                    />
+                                </div>
+
                                 <div className=" col-span-full flex items-center justify-center mt-10">
                                     <PrimaryButton
                                         className="ms-4"
