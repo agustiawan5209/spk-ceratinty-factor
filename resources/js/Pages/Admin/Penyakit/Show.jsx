@@ -26,14 +26,15 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
 
             <div className="py-12 bg-gray-50">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+                    <div className="bg-white shadow-md rounded-lg">
                         <section className="py-8 bg-white relative">
-                            <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                            <div className="w-full flex flex-1 relative justify-center ">
                                 <Link href={route("Penyakit.index")}>
-                                    <div className="w-full p-2 md:p-4 text-base text-white">
+                                    <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-14 left-3 shadow-lg shadow-gray-500 bg-blue-600">
                                         Kembali
                                     </div>
                                 </Link>
+                                <h3 className="font-semibold text-base md:text-2xl leading-4">Detail Data {penyakit.nama}</h3>
                             </div>
                             <div className="max-w-screen-xl border-t-2 mt-4 px-6 py-4 mx-auto">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
