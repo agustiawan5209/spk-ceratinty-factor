@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AturanController;
 use App\Http\Controllers\Admin\GejalaController;
 use App\Http\Controllers\Admin\PengobatanController;
 use App\Http\Controllers\Admin\PenyakitController;
@@ -64,6 +65,19 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'pengobatan', 'as' => 'Pengobatan.'], function () {
         Route::controller(PengobatanController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah', 'create')->name('create');
+            Route::get('/edit', 'edit')->name('edit');
+            Route::get('/show', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update', 'update')->name('update');
+            Route::delete('/destroy', 'destroy')->name('destroy');
+        });
+    });
+
+    // Router Aturan
+    Route::group(['prefix' => 'aturan-diagnosa', 'as' => 'Aturan.'], function () {
+        Route::controller(AturanController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/tambah', 'create')->name('create');
             Route::get('/edit', 'edit')->name('edit');

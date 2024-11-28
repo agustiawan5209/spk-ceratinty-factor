@@ -86,6 +86,19 @@ export default function Authenticated({ user, header, children }) {
                                 <span>Data Pengobatan</span>
                             </NavLink>
                         </li>
+                        <li className="w-full h-auto">
+                            <NavLink
+                                href={route("Aturan.index")}
+                                active={
+                                    route().current("Aturan.index") ||
+                                    route().current("Aturan.create") ||
+                                    route().current("Aturan.edit")
+                                }
+                            >
+                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <span>Data Aturan</span>
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </section>

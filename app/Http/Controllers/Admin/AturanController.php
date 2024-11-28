@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
 use App\Models\Aturan;
+use App\Models\Gejala;
+use App\Models\Penyakit;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -19,6 +21,7 @@ class AturanController extends Controller
     {
         return Inertia::render('Admin/Aturan/Index', [
             'aturan' => Aturan::orderBy('id', 'desc')
+            ->with(['penyakit', 'gejala'])
                 ->filterBySearch(Request::input('search'))
                 ->paginate(10)->withQueryString(),
             'filter' => Request::only('search', 'order', 'filter'),
@@ -36,7 +39,10 @@ class AturanController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Aturan/Form', []);
+        return Inertia::render('Admin/Aturan/Form', [
+            'penyakit'=> Penyakit::all(),
+            'gejala'=> Gejala::all(),
+        ]);
     }
 
     /**

@@ -24,4 +24,22 @@ class Aturan extends Model
     public function gejala(){
         return $this->hasOne(Gejala::class,'id','gejala_id');
     }
+
+    public function scopeFilterBySearch($query, $search)
+    {
+        $query->when($search ?? null, function ($query, $search) {
+            $query->whereHas('penyakit', function($query) use ($search){
+                $query->where('nama','LIKE','%'.$search.'%');
+            })->orWhereHas('gejala', function($query) use ($search){
+                $query->where('nama','LIKE','%'.$search.'%');
+            });
+        });
+    }
+
+    public function scopeFilterByOrder($query, $order)
+    {
+        $query->when($order ?? null, function ($query, $order) {
+            $query->orderBy('id', $order);
+        });
+    }
 }
