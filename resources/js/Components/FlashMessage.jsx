@@ -33,7 +33,7 @@ export default function FlashMessage() {
     return (
         shouldRender && (
             <div
-                className={`fixed max-w-[20%] top-4 left-[30%] z-[99999] right-4 `}
+                className={`fixed max-w-[80%] md:max-w-[20%] top-4 md:left-[30%] z-[99999] right-4 `}
             >
                 {type == "success" ? (
                     <div

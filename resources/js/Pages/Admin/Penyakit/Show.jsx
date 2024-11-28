@@ -127,13 +127,13 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
                                                     key={item.id}
                                                     className="hover:bg-gray-50 transition duration-200"
                                                 >
-                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-black">
                                                         {index + 1}
                                                     </td>
-                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-black">
                                                         {penyakit.nama}
                                                     </td>
-                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-black">
                                                         {sanitizeText(
                                                             item.keterangan
                                                         )}
@@ -166,7 +166,7 @@ function InfoCard({ label, value }) {
         <div className="px-3 py-2 border-b-2">
             <span className="font-semibold text-gray-700">{label}:</span>{" "}
             <span
-                className="text-gray-600"
+                className="text-gray-800"
                 dangerouslySetInnerHTML={{ __html: value }}
             />
         </div>
@@ -177,7 +177,7 @@ function CardDetail({ title, content }) {
    return ( <div className="px-3 py-2 border-b-2 bg-blue-600">
     <span className="font-semibold text-gray-100">{title}:</span>{" "}
     <span
-        className="text-gray-100"
+        className="text-white tracking-wider"
         dangerouslySetInnerHTML={{ __html: content }}
     />
 </div>);
@@ -185,7 +185,7 @@ function CardDetail({ title, content }) {
 function sanitizeText(content) {
     return (
         <p
-            className="text-gray-600 "
+            className="text-gray-900 leading-2 tracking-wide"
             dangerouslySetInnerHTML={{ __html: content }}
         />
     );

@@ -21,7 +21,7 @@ class PenyakitController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Penyakit/Index', [
-            'penyakit' => Penyakit::orderBy('id', 'desc')
+            'penyakit' => Penyakit::orderBy('kode', 'desc')
                 ->filterBySearch(Request::input('search'))
                 ->paginate(10)->withQueryString(),
             'filter' => Request::only('search', 'order', 'filter'),
