@@ -14,10 +14,11 @@ class Penyakit extends Model
     protected $fillable = [
         "kode",
         "nama",
+        "keterangan",
     ];
-    // public function galeri(){
-    //     return $this->hasMany(GaleriPotensi::class, 'potensi_id', 'id');
-    // }
+    public function galeri(){
+        return $this->hasMany(GambarPenyakit::class, 'penyakit_id', 'id');
+    }
 
     public function scopeFilterBySearch($query, $search)
     {

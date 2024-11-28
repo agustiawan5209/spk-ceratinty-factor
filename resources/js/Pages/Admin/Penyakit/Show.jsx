@@ -28,16 +28,14 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
             <div className="py-12 bg-gray-50">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
-                        <section className="py-8 bg-white">
-                            <Link
-                                href={route("Penyakit.index")}
-                                className="pl-10"
-                            >
-                                <PrimaryButton type="button" className="pl-4">
+                        <section className="py-8 bg-white relative">
+                        <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                            <Link href={route("Penyakit.index")}>
+                                <div className="w-full p-2 md:p-4 text-base text-white">
                                     Kembali
-                                </PrimaryButton>
+                                </div>
                             </Link>
-
+                        </div>
                             <div className="max-w-screen-xl border-t-2 mt-4 px-6 py-4 mx-auto">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Information Section */}
@@ -62,17 +60,34 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
 
                                     </div>
 
-                                    {/* Carousel Section */}
-                                 {penyakit.thumbnail != null &&
-                                    <div className="w-full">
-                                    <div className="w-full bg-gray-800 p-4 md:p-8 rounded-lg shadow-lg">
+                                 {/* Carousel Section */}
+                        <div className="w-full">
+                            <div className="w-full bg-secondary p-6 md:p-8 rounded-lg shadow-md">
+                                {penyakit.galeri.length > 1 ?
+                                <Slider {...settings}>
+                                {penyakit.galeri.map((image, index) => (
+                                    <div key={index}>
                                         <img
-                                            src={penyakit.thumbnail_path}
-                                            alt={`Slide ${penyakit.judul}`}
+                                            src={image.image_path}
+                                            alt={`Slide ${image.caption}`}
                                             className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
                                         />
                                     </div>
-                                </div>}
+                                ))}
+                            </Slider>
+                            :  penyakit.galeri.map((image, index) => (
+                                <div key={index}>
+                                    <img
+                                        src={image.image_path}
+                                        alt={`Slide ${image.caption}`}
+                                        className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
+                                    />
+                                </div>
+                            ))
+                            }
+                            </div>
+
+                        </div>
                                 </div>
                             </div>
                         </section>
@@ -87,7 +102,7 @@ function InfoCard({ label, value }) {
     return (
         <div className="py-3 px-6 text-md font-medium text-gray-800 bg-gray-100 rounded-lg border border-gray-300 shadow-sm hover:bg-gray-200">
             <span className="font-semibold text-gray-700">{label}:</span>{" "}
-            <span className="text-gray-600">{value}</span>
+            <sp className="text-gray-600" dangerouslySetInnerHTML={{ __html: value }} />
         </div>
     );
 }

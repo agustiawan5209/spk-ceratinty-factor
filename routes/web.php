@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/edit', 'edit')->name('edit');
             Route::get('/show', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
-            Route::put('/update', 'update')->name('update');
+            Route::post('/update', 'update')->name('update');
             Route::delete('/destroy', 'destroy')->name('destroy');
         });
     });

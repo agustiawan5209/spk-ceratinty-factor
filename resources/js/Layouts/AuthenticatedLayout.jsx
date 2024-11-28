@@ -28,7 +28,7 @@ export default function Authenticated({ user, header, children }) {
 
             <section
                 id="sidebar"
-                className="hidden md:block fixed md:w-[20%] max-w-xs min-h-screen bg-gray-800"
+                className="hidden md:block fixed md:w-[18%] max-w-xs min-h-screen bg-gray-800"
             >
                 <nav className="w-full h-full">
                     <div className="w-full py-4 flex justify-center">
@@ -64,7 +64,7 @@ export default function Authenticated({ user, header, children }) {
                 </nav>
             </section>
 
-            <main className="w-full relative md:left-[20%] md:max-w-[80%]">
+            <main className="w-full relative md:left-[18%] md:max-w-[82%]">
                 {header && (
                     <header className="bg-white shadow flex justify-around px-4">
                         <div className="max-w-sm mx-auto py-6 px-4 sm:px-6 lg:px-8">
