@@ -36,6 +36,10 @@ class RoleSeeder extends Seeder
             'edit pencegahan',
             'delete pencegahan',
             'show pencegahan',
+            'add aturan',
+            'edit aturan',
+            'delete aturan',
+            'show aturan',
         ];
 
         foreach ($permissions as $permission) {
