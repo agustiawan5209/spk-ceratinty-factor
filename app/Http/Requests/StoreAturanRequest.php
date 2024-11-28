@@ -11,7 +11,7 @@ class StoreAturanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,23 @@ class StoreAturanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'penyakit_id'=> 'required|exists:penyakits,id',
+            'aturan'=> 'required|array',
+            'aturan.*.id'=> 'required|exists:gejalas,id',
+            'aturan.*.md'=> 'required|decimal:0,1',
+            'aturan.*.mb'=> 'required|decimal:0,1',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'penyakit_id.exists'=> 'Data Penyakit Tidak Ada Dalam Database',
+            'aturan.required'=> 'Data Gejala Dari Penyakit Kosong!!!',
+            'aturan.*.md.required'=> 'Nilai MD (Measure of Disbelief) harus di isi',
+            'aturan.*.mb.required'=> 'Nilai MB (Measure of Belief) harus di isi',
+            'aturan.*.md.decimal'=> 'Nilai MD (Measure of Disbelief) harus berada diantara 0 sampai 1',
+            'aturan.*.mb.decimal'=> 'Nilai MB (Measure of Belief) harus berada diantara 0 sampai 1',
         ];
     }
 }

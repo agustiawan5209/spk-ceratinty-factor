@@ -51,7 +51,21 @@ class AturanController extends Controller
     public function store(StoreAturanRequest $request)
     {
         try {
-            $aturan = Aturan::create($request->all());
+            $Penyakit = Penyakit::find($request->penyakit_id);
+            $aturan = $request->aturan;
+
+            $length = count($aturan);
+
+            for($i = 0; $i < $length; $i++){
+                Aturan::create([
+                    'penyakit_id'=> $Penyakit->id,
+                    'gejala_id'=> $aturan[$i]['id'],
+                    'mb'=> $aturan[$i]['mb'],
+                    'md'=> $aturan[$i]['md'],
+                    'cf'=> ($aturan[$i]['mb'] - $aturan[$i]['md']),
+                    'keterangan'=> $aturan[$i]['keterangan']
+                ]);
+            }
 
 
             return redirect()->route('Aturan.index')->with('success', 'Data Berhasil Di Tambahkan');
@@ -66,7 +80,7 @@ class AturanController extends Controller
     public function show(Aturan $aturan)
     {
         return Inertia::render('Admin/Aturan/Show', [
-            'aturan' => $aturan->with(['galeri'])->find(Request::input('slug')),
+            'aturan' => $aturan->find(Request::input('slug')),
         ]);
     }
 
@@ -76,7 +90,7 @@ class AturanController extends Controller
     public function edit(Aturan $aturan)
     {
         return Inertia::render('Admin/Aturan/Edit', [
-            'aturan' => $aturan->with(['galeri'])->find(Request::input('slug')),
+            'aturan' => $aturan->find(Request::input('slug')),
         ]);
     }
 
