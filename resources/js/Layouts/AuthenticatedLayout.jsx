@@ -60,6 +60,19 @@ export default function Authenticated({ user, header, children }) {
                                 <span>Data Penyakit</span>
                             </NavLink>
                         </li>
+                        <li className="w-full h-auto">
+                            <NavLink
+                                href={route("Gejala.index")}
+                                active={
+                                    route().current("Gejala.index") ||
+                                    route().current("Gejala.create") ||
+                                    route().current("Gejala.edit")
+                                }
+                            >
+                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <span>Data Gejala</span>
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </section>

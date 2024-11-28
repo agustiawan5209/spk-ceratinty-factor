@@ -3,28 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import Modal from "@/Components/Modal";
+import FormGejala from "../Gejala/Form";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function DaftarGejala({
-    auth,
-    penyakit,
-    can,
-    topik,
-    kategori,
-}) {
-    // Membuat form untuk menghapus dan mencari data penyakit
-    const {
-        data,
-        setData,
-        get,
-        post,
-        delete: destroy,
-        processing,
-        errors,
-        reset,
-    } = useForm({});
-
-    // Mengambil data user dan data penyakit dari props
+export default function DaftarGejala({ auth, gejala, can }) {
+    // Mengambil data user dan data gejala dari props
     const { crud } = can;
 
     const aksi = () => {
@@ -37,9 +20,22 @@ export default function DaftarGejala({
 
     // State untuk menyimpan query pencarian
     const [search, setSearch] = useState("");
-    // Fungsi untuk mencari data penyakit
-    const searchTopik = (search) => {
-        get(route("Penyakit.index", { search: search }), {
+
+    // Membuat form untuk menghapus dan mencari data gejala
+    const {
+        data,
+        setData,
+        get,
+        post,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({});
+
+    // Fungsi untuk mencari data gejala
+    const searchGejala = (search) => {
+        get(route("Gejala.index", { search: search }), {
             // Mengatur agar state halaman tetap dipertahankan saat melakukan pencarian
             preserveState: true,
         });
@@ -48,29 +44,11 @@ export default function DaftarGejala({
     // Fungsi untuk menangani perubahan input pencarian
     const handleSearch = (e) => {
         setSearch(e.target.value);
-        searchTopik(e.target.value); // Mencari data penyakit berdasarkan query pencarian
+        searchGejala(e.target.value); // Mencari data gejala berdasarkan query pencarian
     };
 
-    // State Untuk Filter Data
-    const [FilterData, setFilterData] = useState({
-        topik: "",
-        kategori: "",
-        status: "",
-    });
-
-    const handleFilter = (e) => {
-        const { name, value } = e.target;
-        get(route('Penyakit.index', {[name]: value}),{
-            preserveState: true,
-        })
-        setFilterData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    // Menyaring data penyakit berdasarkan input pencarian
-    const filteredPenyakit = penyakit.data;
+    // Menyaring data gejala berdasarkan input pencarian
+    const filteredGejala = gejala.data;
 
     // Fungsi untuk membersihkan teks HTML dari tag HTML
     function sanitizeText(htmlString) {
@@ -81,24 +59,24 @@ export default function DaftarGejala({
 
     // State untuk mengatur modal konfirmasi penghapusan
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    // State untuk menyimpan data penyakit yang akan dihapus
+    // State untuk menyimpan data gejala yang akan dihapus
     const [itemData, setItemData] = useState(null);
 
     // Fungsi untuk membuka modal konfirmasi penghapusan
     const openModal = (item) => {
         setIsDeleteModalOpen(true);
-        setItemData(item); // Mengatur slug penyakit yang akan dihapus
+        setItemData(item); // Mengatur slug gejala yang akan dihapus
     };
 
     // Fungsi untuk menutup modal konfirmasi penghapusan
     const closeModal = () => {
         setIsDeleteModalOpen(false);
-        setItemData(null); // Mengatur ulang state slug penyakit
+        setItemData(null); // Mengatur ulang state slug gejala
     };
 
-    // Fungsi untuk menghapus data penyakit
+    // Fungsi untuk menghapus data gejala
     const deleteData = (id) => {
-        destroy(route("Penyakit.destroy", { slug: id }), {
+        destroy(route("Gejala.destroy", { slug: id }), {
             // Mengatur agar modal konfirmasi penghapusan ditutup saat penghapusan berhasil
             onSuccess: () => {
                 closeModal();
@@ -109,17 +87,38 @@ export default function DaftarGejala({
         });
     };
 
+    // State untuk mengatur modal tambah data
+    const [isAddModal, setAddModalOpen] = useState(false);
+    // State untuk menyimpan data gejala yang akan ditambah atau diedit
+    const [selectedGejala, setSelectedGejala] = useState(null);
+
+    // Fungsi untuk membuka modal tambah data
+    const openModalAdd = () => {
+        setSelectedGejala(null);
+        setAddModalOpen(true);
+    };
+
+    // Fungsi untuk membuka modal edit data
+    const openModalForEdit = (gejala) => {
+        setSelectedGejala(gejala); // Mengatur data gejala yang akan diedit
+        setAddModalOpen(true);
+    };
+
+    // Fungsi untuk menutup modal tambah data
+    const closeAddModal = () => {
+        setSelectedGejala(null);
+        setAddModalOpen(false);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Daftar Penyakit
+                    Daftar Gejala
                 </h2>
             }
         >
-            <Head title="Daftar Penyakit" />
-
             <Modal show={isDeleteModalOpen} onClose={closeModal} maxWidth="md">
                 {/* Modal konfirmasi penghapusan */}
                 <div className="relative">
@@ -132,7 +131,7 @@ export default function DaftarGejala({
                                 <p className="font-bold">Warning!</p>
                                 <p className="text-sm text-gray-700 mt-1">
                                     Apakah Anda yakin ingin menghapus item
-                                    dengan ID: {itemData ? itemData.judul : ""}?
+                                    dengan ID: {itemData ? itemData.nama : ""}?
                                 </p>
                             </div>
                         </div>
@@ -156,129 +155,83 @@ export default function DaftarGejala({
                 </div>
             </Modal>
 
+            <Modal show={isAddModal} onClose={() => setAddModalOpen(false)}>
+                {/* Modal tambah data */}
+                <div className="p-2 block">
+                    <div className="flex justify-center items-center pb-4 mb-4 rounded-t sm:mb-5">
+                        <h3 className="text-lg text-center md:text-2xl font-semibold text-gray-900 ">
+                            {selectedGejala == null
+                                ? "Tambah Data"
+                                : "Edit Data"}
+                        </h3>
+                        <button
+                            type="button"
+                            onClick={closeAddModal}
+                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                            data-modal-toggle="updateProductModal"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                className="w-5 h-5"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                ></path>
+                            </svg>
+                            <span className="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <FormGejala
+                        auth={auth}
+                        gejala={selectedGejala}
+                        setModalOpen={setAddModalOpen}
+                    />
+                </div>
+            </Modal>
+            <Head title="DaftarGejala" />
+
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-3">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white shadow-md sm:rounded-lg p-6">
                         {/* Search and Add Button */}
                         <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
                             <input
                                 type="search"
-                                placeholder="Cari penyakit..."
+                                placeholder="Cari gejala..."
                                 value={search}
                                 onChange={handleSearch}
                                 className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                             />
-                            {can.add && (
-                                <Link href={route("Penyakit.create")}>
-                                    <PrimaryButton
-                                        type="button"
-                                        className="mt-2 sm:mt-0 p-2 bg-blue-500 text-white rounded-lg hover:bg-primary transition duration-200"
-                                    >
-                                        Tambah Data
-                                    </PrimaryButton>
-                                </Link>
-                            )}
-                        </div>
-                        {/* Filter Data */}
-                        <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-                            <ul className="inline-flex space-x-3">
-                                {topik.length > 0 && (
-                                    <li className="px-2 border-x border-gray-300">
-                                        <div className="relative">
-                                            <select
-                                                id="filter_topik"
-                                                name="topik"
-                                                value={FilterData.topik}
-                                                onChange={handleFilter}
-                                                className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                            >
-                                                <option value="" >
-                                                    Pilih Topik-------
-                                                </option>
-                                                {topik.map((item) => (
-                                                    <option
-                                                        key={item.id}
-                                                        value={item.nama}
-                                                    >
-                                                        {item.nama}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700">
-                                                <FontAwesomeIcon
-                                                    icon="fa-solid fa-angle-down"
-                                                    className="w-5 h-5 bg-white"
-                                                />
-                                            </div>
-                                        </div>
-                                    </li>
-                                )}
-                                {kategori.length > 0 && (
-                                    <li className="px-2 border-x border-gray-300">
-                                        <select
-                                            id="filter_kategori"
-                                            name="kategori"
-                                            value={FilterData.kategori}
-                                            onChange={handleFilter}
-                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        >
-                                            <option value="" >
-                                                Pilih Kategori---------
-                                            </option>
-                                            {kategori.map((item) => (
-                                                <option key={item.id} value={item.nama}>
-                                                {item.nama}
-                                            </option>
-                                            ))}
-                                        </select>
-                                    </li>
-                                )}
-                                <li className="px-2 border-x border-gray-300">
-                                    <select
-                                        id="filter_status"
-                                        value={FilterData.status}
-                                        onChange={handleFilter}
-                                        name="status"
-                                        className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    >
-                                        <option value="" >
-                                            Pilih Status----
-                                        </option>
-                                        <option value="Publish">Publish</option>
-                                        <option value="Draft">Draft</option>
-                                        <option value="nonAktif">
-                                            nonAktif
-                                        </option>
-                                    </select>
-                                </li>
-                            </ul>
+                            {can.add && <PrimaryButton
+                                type="button"
+                                onClick={openModalAdd}
+                                className="mt-2 sm:mt-0 p-2 bg-blue-500 text-white rounded-lg hover:bg-primary transition duration-200"
+                            >
+                                Tambah Data
+                            </PrimaryButton>}
                         </div>
 
-                        {/* Table of Topik */}
-                        <div className="mt-6 overflow-x-auto rounded-t-md">
+                        {/* Table of Gejala */}
+                        <div className="mt-6 overflow-x-auto">
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                                 <thead>
-                                    <tr className="bg-gray-100">
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
+                                    <tr className="bg-blue-600 text-white">
+                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
                                             No.
                                         </th>
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
-                                            Topik
+                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
+                                            Kode Gejala
                                         </th>
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
-                                            Kategori
-                                        </th>
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
-                                            Nama Penyakit
-                                        </th>
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
-                                            Jumah Pengunjung Website
-                                        </th>
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
-                                            Status Penyakit
+                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
+                                            Nama Gejala
                                         </th>
                                         {aksi && (
-                                            <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">
+                                            <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
                                                 Aksi
                                             </th>
                                         )}
@@ -287,90 +240,60 @@ export default function DaftarGejala({
                                 <tbody
                                     className={processing ? "opacity-50" : ""}
                                 >
-                                    {filteredPenyakit.length > 0 ? (
-                                        filteredPenyakit.map(
-                                            (item, index) => (
-                                                <tr
-                                                    key={item.id}
-                                                    className="hover:bg-gray-50 transition duration-200"
-                                                >
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        {(penyakit.current_page -
-                                                            1) *
-                                                            penyakit.per_page +
-                                                            index +
-                                                            1}
-                                                    </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        {item.topik}
-                                                    </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        {item.kategori}
-                                                    </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        {item.judul}
-                                                    </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        {item.visitor}
-                                                    </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        {item.status}
-                                                    </td>
-                                                    <td className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700">
-                                                        <div className="flex space-x-2">
-                                                            {can.show && (
-                                                                <Link
-                                                                    href={route(
-                                                                        "Penyakit.show",
-                                                                        {
-                                                                            slug: item.id,
-                                                                        }
-                                                                    )}
-                                                                    className="bg-blue-500 text-white p-1 rounded-md hover:underline"
-                                                                >
-                                                                    <span>
-                                                                        Detail
-                                                                    </span>{" "}
-                                                                    <FontAwesomeIcon icon="fa-solid fa-eye" />
-                                                                </Link>
-                                                            )}
-                                                            {can.edit && (
-                                                                <Link
-                                                                    href={route(
-                                                                        "Penyakit.edit",
-                                                                        {
-                                                                            slug: item.id,
-                                                                        }
-                                                                    )}
-                                                                    className="bg-green-500 text-white p-1 rounded-md hover:underline"
-                                                                >
-                                                                    <span>
-                                                                        edit
-                                                                    </span>{" "}
-                                                                    <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
-                                                                </Link>
-                                                            )}
-                                                            {can.delete && (
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() =>
-                                                                        openModal(
-                                                                            item
-                                                                        )
-                                                                    }
-                                                                    className="bg-red-500 text-white p-1 rounded-md hover:underline"
-                                                                >
-                                                                    <span>
-                                                                        Hapus
-                                                                    </span>{" "}
-                                                                    <FontAwesomeIcon icon="fa-solid fa-trash-can" />
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        )
+                                    {filteredGejala.length > 0 ? (
+                                        filteredGejala.map((item, index) => (
+                                            <tr
+                                                key={item.id}
+                                                className="hover:bg-gray-50 transition duration-200"
+                                            >
+                                                <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    {(gejala.current_page - 1) * gejala.per_page + index + 1 }
+                                                </td>
+                                                <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    {item.kode}
+                                                </td>
+                                                <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    {item.nama}
+                                                </td>
+                                                <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    <div className="flex space-x-2">
+                                                        {can.show && (
+                                                            <Link
+                                                                href={`/gejala/${item.id}`}
+                                                                className="text-blue-500 hover:underline"
+                                                            >
+                                                                Detail
+                                                            </Link>
+                                                        )}
+                                                        {can.edit && (
+                                                            <button
+                                                                onClick={() =>
+                                                                    openModalForEdit(
+                                                                        item
+                                                                    )
+                                                                }
+                                                                className="bg-green-500 text-white p-1 rounded-md hover:underline"
+                                                            >
+                                                                <FontAwesomeIcon icon="fa-solid fa-user" />
+                                                            </button>
+                                                        )}
+                                                        {can.delete && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() =>
+                                                                    openModal(
+                                                                        item
+                                                                    )
+                                                                }
+                                                                className="bg-red-500 text-white p-1 rounded-md hover:underline"
+                                                            >
+                                                                <FontAwesomeIcon icon="fa-solid fa-trash-can" />
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
                                     ) : (
                                         <tr>
                                             <td
@@ -387,7 +310,7 @@ export default function DaftarGejala({
 
                         {/* Pagination */}
                         <div className="mt-4 flex justify-center">
-                            {penyakit.links.map((link, index) => (
+                            {gejala.links.map((link, index) => (
                                 <Link
                                     key={index}
                                     href={link.url}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\GejalaController;
 use App\Http\Controllers\Admin\PenyakitController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -38,6 +39,17 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'penyakit', 'as' => 'Penyakit.'], function () {
         Route::controller(PenyakitController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/tambah', 'create')->name('create');
+            Route::get('/edit', 'edit')->name('edit');
+            Route::get('/show', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update', 'update')->name('update');
+            Route::delete('/destroy', 'destroy')->name('destroy');
+        });
+    });
+    Route::group(['prefix' => 'gejala', 'as' => 'Gejala.'], function () {
+        Route::controller(GejalaController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/tambah', 'create')->name('create');
             Route::get('/edit', 'edit')->name('edit');

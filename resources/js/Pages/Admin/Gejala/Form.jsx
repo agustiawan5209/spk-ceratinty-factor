@@ -8,31 +8,31 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef,useState } from "react";
 import LoadingPage from "@/Components/LoadingPage";
-export default function FormDusun({ auth, dusun, setModalOpen }) {
+export default function FormDusun({ auth, gejala, setModalOpen }) {
     const { data, setData, post,put, processing, errors } = useForm({
         slug: "",
         nama: "",
-        keterangan: "",
+        kode: "",
     });
 
     const quillRef = useRef(null); // Membuat ref untuk ReactQuill
 
     useEffect(() => {
-        if (dusun) {
+        if (gejala) {
             setData({
-                slug: dusun.id,
-                nama: dusun.nama,
-                keterangan: dusun.keterangan,
+                slug: gejala.id,
+                nama: gejala.nama,
+                kode: gejala.kode,
             });
         }
-    }, [dusun]);
+    }, [gejala]);
 
     const [isLoading, setIsLoading] = useState(false);
     const submit = (e) => {
         e.preventDefault();
-        if (dusun) {
-            // Jika ada dusun, lakukan update
-            put(route("Dusun.update"), {
+        if (gejala) {
+            // Jika ada gejala, lakukan update
+            put(route("Gejala.update"), {
                 preserveState: true,
                 onBefore:()=>{
                     setIsLoading(true);
@@ -50,8 +50,8 @@ export default function FormDusun({ auth, dusun, setModalOpen }) {
                 },
             });
         } else {
-            // Jika tidak ada dusun, lakukan create
-            post(route("Dusun.store"), {
+            // Jika tidak ada gejala, lakukan create
+            post(route("Gejala.store"), {
                 preserveState: true,
                 onSuccess: () => {
                     setModalOpen(false); // Menutup modal setelah berhasil
@@ -73,7 +73,26 @@ export default function FormDusun({ auth, dusun, setModalOpen }) {
                     <form onSubmit={submit} className="p-4 max-w-xl">
                         {/* Name Input */}
                         <div className="mb-4">
-                            <InputLabel htmlFor="nama" value="Nama Dusun" />
+                            <InputLabel htmlFor="kode" value="Kode" />
+                            <TextInput
+                                id="kode"
+                                type="text"
+                                className="mt-1 block w-full"
+                                autoComplete="off"
+                                isFocused={false}
+                                value={data.kode}
+                                onChange={(e) =>
+                                    setData("kode", e.target.value)
+                                }
+                                placeholder="Kode Gejala"
+                            />
+                            <InputError
+                                message={errors.kode}
+                                className="mt-2"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <InputLabel htmlFor="nama" value="Nama Gejala" />
                             <TextInput
                                 id="nama"
                                 type="text"
@@ -84,7 +103,7 @@ export default function FormDusun({ auth, dusun, setModalOpen }) {
                                 onChange={(e) =>
                                     setData("nama", e.target.value)
                                 }
-                                placeholder="Nama Dusun"
+                                placeholder="Nama Gejala"
                             />
                             <InputError
                                 message={errors.nama}
@@ -92,26 +111,7 @@ export default function FormDusun({ auth, dusun, setModalOpen }) {
                             />
                         </div>
 
-                        {/* Description Input using ReactQuill */}
-                        <div className="mb-4">
-                            <InputLabel
-                                htmlFor="keterangan"
-                                value="Keterangan Dusun"
-                            />
-                            <ReactQuill
-                                ref={quillRef} // Menggunakan ref di sini
-                                theme="snow"
-                                value={data.keterangan}
-                                onChange={(value) =>
-                                    setData("keterangan", value)
-                                }
-                                className="mt-1"
-                            />
-                            <InputError
-                                message={errors.keterangan}
-                                className="mt-2"
-                            />
-                        </div>
+
 
                         {/* Submit Button */}
                         <div className="flex items-center justify-end mt-4">
