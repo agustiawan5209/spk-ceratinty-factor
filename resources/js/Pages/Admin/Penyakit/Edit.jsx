@@ -8,7 +8,7 @@ import TextInput from "@/Components/TextInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import LoadingPage from "@/Components/LoadingPage";
-export default function EditPenyakit({ auth, dusun, kategori, penyakit }) {
+export default function EditPenyakit({ auth, penyakit }) {
     const initialGallery = [...penyakit.galeri].map((item) => item.image_path);
     const { data, setData, post, processing, errors } = useForm({
         id: penyakit.id,
@@ -190,7 +190,7 @@ export default function EditPenyakit({ auth, dusun, kategori, penyakit }) {
                         <div className="mb-4 col-span-full">
                             <InputLabel
                                 htmlFor="keterangan"
-                                value="Keterangan Dusun"
+                                value="Keterangan"
                             />
                             <div className="w-full">
                             <ReactQuill

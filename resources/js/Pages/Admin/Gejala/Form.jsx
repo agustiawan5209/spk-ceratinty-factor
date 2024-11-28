@@ -8,7 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef,useState } from "react";
 import LoadingPage from "@/Components/LoadingPage";
-export default function FormDusun({ auth, gejala, setModalOpen }) {
+export default function FormGejala({ auth, gejala, setModalOpen }) {
     const { data, setData, post,put, processing, errors } = useForm({
         slug: "",
         nama: "",

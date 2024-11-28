@@ -194,7 +194,7 @@ export default function FormPenyakit({ auth }) {
                         <div className="mb-4 col-span-full">
                             <InputLabel
                                 htmlFor="keterangan"
-                                value="Keterangan Dusun"
+                                value="Keterangan "
                             />
                             <div className="w-full">
                             <ReactQuill
