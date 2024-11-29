@@ -11,7 +11,7 @@ class UpdateAturanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateAturanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'slug'=> 'required|exists:aturans,id',
+            'penyakit_id'=> 'required|exists:penyakits,id',
+            'gejala_id'=> 'required|exists:gejalas,id',
+            'mb'=> 'required|decimal:0,1',
+            'md'=> 'required|decimal:0,1',
+            'keterangan'=> 'required|string|max:150',
         ];
     }
 }

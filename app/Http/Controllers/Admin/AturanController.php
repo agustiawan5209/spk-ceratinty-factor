@@ -57,12 +57,14 @@ class AturanController extends Controller
             $length = count($aturan);
 
             for($i = 0; $i < $length; $i++){
+
+                $cf = $aturan[$i]['mb'] - $aturan[$i]['md'];
                 Aturan::create([
                     'penyakit_id'=> $Penyakit->id,
                     'gejala_id'=> $aturan[$i]['id'],
                     'mb'=> $aturan[$i]['mb'],
                     'md'=> $aturan[$i]['md'],
-                    'cf'=> ($aturan[$i]['mb'] - $aturan[$i]['md']),
+                    'cf'=> $cf,
                     'keterangan'=> $aturan[$i]['keterangan']
                 ]);
             }
@@ -91,6 +93,8 @@ class AturanController extends Controller
     {
         return Inertia::render('Admin/Aturan/Edit', [
             'aturan' => $aturan->find(Request::input('slug')),
+            'penyakit'=> Penyakit::all(),
+            'gejala'=> Gejala::all(),
         ]);
     }
 
@@ -100,7 +104,11 @@ class AturanController extends Controller
     public function update(UpdateAturanRequest $request, Aturan $aturan) {
         try {
             $aturan = Aturan::find(Request::input('slug'));
-            $aturan->update($request->all());
+
+            $data = $request->all();
+            $cf = $data['mb'] - $data['md'];
+            $data['cf'] = $cf;
+            $aturan->update($data);
 
 
             return redirect()->route('Aturan.index')->with('success', 'Data Berhasil Di Ubah');

@@ -5,50 +5,27 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import LoadingPage from "@/Components/LoadingPage";
-export default function EditPenyakit({ auth, penyakit }) {
-    const initialGallery = [...penyakit.galeri].map((item) => item.image_path);
-    const { data, setData, post, processing, errors } = useForm({
-        id: penyakit.id,
-        slug: penyakit.id,
-        kode: penyakit.kode,
-        keterangan: penyakit.keterangan,
-        pencegahan: penyakit.pencegahan,
-        nama: penyakit.nama,
-        images: initialGallery,
+import Modal from "@/Components/Modal";
+import PetunjukPenggunaanAturan from "./Petunjuk";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+export default function EditAturan({ auth, gejala, penyakit, aturan }) {
+    const { data, setData, put, processing, errors } = useForm({
+        slug: aturan.id,
+        penyakit_id: aturan.penyakit_id,
+        gejala_id:  aturan.gejala_id,
+        mb:  Number(aturan.mb).toFixed(1),
+        md:  Number(aturan.md).toFixed(1),
+        cf:  aturan.cf,
+        keterangan:  aturan.keterangan,
     });
 
-    const quillRef = useRef(null);
-    const quillRefPencegahan = useRef(null);
-
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        setData("images", [...data.images, ...files]);
-    };
-
-    const handleRemoveImage = (index) => {
-        setData(
-            "images",
-            data.images.filter((_, i) => i !== index)
-        );
-    };
-
     const [isLoading, setIsLoading] = useState(false);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const formData = new FormData();
-        // Object.entries(data).forEach(([key, value]) => {
-        //     if (Array.isArray(value)) {
-        //         value.forEach((file) => formData.append(key, file));
-        //     } else {
-        //         formData.append(key, value);
-        //     }
-        // });
-
-        post(route("Penyakit.update"), {
-            // data: formData,
+        put(route("Aturan.update"), {
             onBefore: () => {
                 setIsLoading(true);
             },
@@ -56,195 +33,223 @@ export default function EditPenyakit({ auth, penyakit }) {
                 setIsLoading(false);
                 // reset()
             },
-            onError: (err) => console.log(err),
+            onError: (err) => {
+                console.log(err);
+            },
         });
     };
-
+    const NilaiMB = [
+        { nilai: 1.00, txt: "Sangat Yakin" },
+        { nilai: 0.80, txt: "Yakin" },
+        { nilai: 0.60, txt: "Cukup Yakin" },
+        { nilai: 0.40, txt: "Kurang Yakin" },
+        { nilai: 0.20, txt: "Tidak Tahu" },
+        { nilai: 0.00, txt: "Tidak" },
+    ];
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Ubah Potensi Daerah
+                    Form Aturan
                 </h2>
             }
         >
-            <Head title="Ubah Potensi Daerah" />
+            <Head title="Form Aturan" />
             {isLoading && <LoadingPage />}
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white relative shadow-sm sm:rounded-lg">
-                        <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-blue-600">
-                            <Link href={route("Penyakit.index")}>
-                                <div className="w-full p-2 md:p-4 text-base text-white">
+                        <div className="w-full flex flex-1 relative justify-end ">
+                            <Link href={route("Aturan.index")}>
+                                <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-8 left-3 shadow-lg shadow-gray-500 bg-blue-600">
                                     Kembali
                                 </div>
                             </Link>
-                        </div>
-                       <div className="p-2 md:p-4">
-                       <h1 className="text-2xl font-bold mb-4 text-gray-800">
-                            Ubah Potensi Daerah
-                        </h1>
-                        <form
-                            onSubmit={handleSubmit}
-                            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                            encType="multipart/form-data"
-                        >
-                            <div className="col-span-full mt-6">
-                                <InputLabel
-                                    htmlFor="gambar"
-                                    value="Gambar Potensi Daerah"
-                                />
-                                <input
-                                    type="file"
-                                    multiple
-                                    id="gambar"
-                                    onChange={handleImageChange}
-                                    className="block w-full mt-1"
-                                />
-                                <InputError
-                                    message={errors.gambar}
-                                    className="mt-2"
-                                />
-                                <div className="flex gap-4 mt-4">
-                                    {data.images.map((image, index) => (
-                                        <div key={index} className="relative">
-                                            <img
-                                                src={
-                                                    typeof image === "string"
-                                                        ? image
-                                                        : URL.createObjectURL(
-                                                              image
-                                                          )
-                                                }
-                                                alt="Gambar"
-                                                className="w-24 h-24 object-cover rounded"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    handleRemoveImage(index)
-                                                }
-                                                className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
-                                            >
-                                                ✕
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            <p className="text-xs text-gray-500">Keterangan: Anda Dapat Menyimpan Lebih Dari Satu Gambar</p>
-
-                            <div className="col-span-2">
-                                <InputLabel
-                                    htmlFor="tgl"
-                                    value="kode Penyakit"
-                                />
-
-                                <TextInput
-                                    id="kode"
-                                    type="text"
-                                    name="kode"
-                                    value={data.kode}
-                                    className="mt-1 block w-full"
-                                    autoComplete="kode"
-                                    isFocused={false}
-                                    placeholder="00----"
-                                    onChange={(e) =>
-                                        setData("kode", e.target.value)
-                                    }
-                                />
-
-                                <InputError
-                                    message={errors.kode}
-                                    className="mt-2"
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <InputLabel
-                                    htmlFor="nama"
-                                    value="nama Penyakit"
-                                />
-
-                                <TextInput
-                                    id="nama"
-                                    type="text"
-                                    name="nama"
-                                    value={data.nama}
-                                    className="mt-1 block w-full"
-                                    placeholder="nama Penyakit"
-                                    autoComplete="nama"
-                                    isFocused={false}
-                                    onChange={(e) =>
-                                        setData("nama", e.target.value)
-                                    }
-                                />
-
-                                <InputError
-                                    message={errors.nama}
-                                    className="mt-2"
-                                />
-                            </div>
-
-                        {/* Description Input using ReactQuill */}
-                        <div className="mb-4 col-span-full">
-                            <InputLabel
-                                htmlFor="keterangan"
-                                value="Keterangan"
-                            />
-                            <div className="w-full">
-                            <ReactQuill
-                                ref={quillRef} // Menggunakan ref di sini
-                                theme="snow"
-                                value={data.keterangan}
-                                onChange={(value) =>
-                                    setData("keterangan", value)
-                                }
-                                className="mt-1"
-                            />
-                            </div>
-                            <InputError
-                                message={errors.keterangan}
-                                className="mt-2"
-                            />
-                        </div>
-                         {/* Description Input For Pencegahan using ReactQuill */}
-                         <div className="mb-4 col-span-full">
-                                    <InputLabel
-                                        htmlFor="pencegahan"
-                                        value="Keterangan Cara Pencegahan Penyakit"
-                                    />
-                                    <p className="text-xs text-gray-500">
-                                        catatan: Berikan detail cara Pencegahan
-                                        terkait penyakit ini.
-                                    </p>
-                                    <div className="w-full">
-                                        <ReactQuill
-                                            ref={quillRefPencegahan} // Menggunakan ref di sini
-                                            theme="snow"
-                                            value={data.pencegahan}
-                                            onChange={(value) =>
+                            <div className="p-2 mt-4 md:p-4">
+                                <h1 className="md:text-2xl font-bold mb-1 md:mb-4">
+                                    Ubah Data Aturan
+                                </h1>
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="grid grid-cols-2 gap-4"
+                                    encType="multipart/form-data"
+                                >
+                                    <div className="mb-4 col-span-full">
+                                        <InputLabel
+                                            htmlFor="penyakit_id"
+                                            value="Pilih Data Penyakit"
+                                        />
+                                        <select
+                                            id="penyakit"
+                                            name="penyakit_id"
+                                            value={data.penyakit_id}
+                                            onChange={(e) =>
                                                 setData(
-                                                    "pencegahan",
-                                                    value
+                                                    "penyakit_id",
+                                                    e.target.value
                                                 )
                                             }
-                                            className="mt-1"
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            <option value="">
+                                                Pilih Data Penyakit-------
+                                            </option>
+                                            {penyakit.map((item) => (
+                                                <option
+                                                    key={item.id}
+                                                    value={item.id}
+                                                >
+                                                    {item.kode}|| {item.nama}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <InputError
+                                            message={errors.penyakit_id}
+                                            className="mt-2"
                                         />
                                     </div>
-                                    <InputError
-                                        message={errors.pencegahan}
-                                        className="mt-2"
-                                    />
-                                </div>
-                            <div className="col-span-full flex justify-center mt-6">
-                                <PrimaryButton disabled={processing}>
-                                    Simpan
-                                </PrimaryButton>
+{/* Gejala */}
+                                    <div className="mb-4">
+                                        <InputLabel
+                                            htmlFor="gejala_id"
+                                            value="Gejala"
+                                        />
+                                        <select
+                                            id="gejala"
+                                            name="gejala_id"
+                                            value={data.gejala_id}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "gejala_id",
+                                                    e.target.value
+                                                )
+                                            }
+                                            disabled={true}
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            <option value="">
+                                                Pilih Data Penyakit-------
+                                            </option>
+                                            {gejala.map((item) => (
+                                                <option
+                                                    key={item.id}
+                                                    value={item.id}
+                                                >
+                                                    {item.kode}|| {item.nama}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <InputError
+                                            message={errors.gejala_id}
+                                            className="mt-2"
+                                        />
+                                    </div>
+
+                                    {/* Nilai MB */}
+                                    <div className="mb-4">
+                                        <InputLabel
+                                            htmlFor="mb"
+                                            value="Nilai MB (Hipotesa Kepastian Nilai terhadap suatu gejala)"
+                                        />
+                                        <select
+                                            id="mb"
+                                            name="mb"
+                                            value={data.mb}
+                                            onChange={(e) =>
+                                                setData('mb', e.target.value)
+                                            }
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            <option value="">
+                                                Pilih Nilai MB-------
+                                            </option>
+                                            {NilaiMB.map((col) => (
+                                                <option
+                                                    key={col.nilai}
+                                                    value={col.nilai}
+                                                >
+                                                    {col.txt}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <InputError
+                                            message={errors.mb}
+                                            className="mt-2"
+                                        />
+                                    </div>
+
+                                    {/* Nilai MD */}
+                                    <div className="mb-4">
+                                        <InputLabel
+                                            htmlFor="md"
+                                            value="Nilai MD (Hipotesa Ketidakpastian Nilai terhadap suatu gejala)"
+                                        />
+                                        <select
+                                            id="md"
+                                            name="md"
+                                            value={data.md}
+                                            onChange={(e) =>
+                                                setData('md', e.target.value)
+                                            }
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                            <option value="">
+                                                Pilih Nilai MD-------
+                                            </option>
+                                            {NilaiMB.map((col) => (
+                                                <option
+                                                    key={col.nilai}
+                                                    value={col.nilai}
+                                                >
+                                                    {col.txt}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <InputError
+                                            message={errors.md}
+                                            className="mt-2"
+                                        />
+                                    </div>
+
+                                    {/* Keterangan */}
+                                    <div className="mb-4">
+                                        <InputLabel
+                                            htmlFor="keterangan"
+                                            value="Keterangan"
+                                        />
+                                        <TextInput
+                                            id="keterangan"
+                                            type="text"
+                                            className="mt-1 block w-full"
+                                            autoComplete="off"
+                                            isFocused={false}
+                                            value={data.keterangan}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "keterangan",
+                                                    e.target.value
+                                                )
+                                            }
+                                            placeholder="Gejala"
+                                        />
+                                        <InputError
+                                            message={errors.keterangan}
+                                            className="mt-2"
+                                        />
+                                    </div>
+                                    <div className=" col-span-full flex items-center justify-center mt-10">
+                                        <PrimaryButton
+                                            className="ms-4"
+                                            disabled={processing}
+                                        >
+                                            Simpan
+                                        </PrimaryButton>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                       </div>
+                        </div>
                     </div>
                 </div>
             </div>
