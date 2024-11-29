@@ -27,6 +27,7 @@ export default function PetunjukPenggunaanAturan() {
                         . Klik dropdown tersebut, lalu pilih penyakit yang ingin
                         ditambahkan aturan diagnosanya.
                     </p>
+                    <img src="/images/petunjuk/1.png" alt="Petunjuk 1" srcset="" />
                 </div>
 
                 {/* <!-- Step 2 --> */}
@@ -48,6 +49,8 @@ export default function PetunjukPenggunaanAturan() {
                             tersebut.
                         </li>
                     </ul>
+                    <img src="/images/petunjuk/2.png" alt="Petunjuk 2" srcset="" />
+
                 </div>
 
                 {/* <!-- Step 3 --> */}
@@ -78,12 +81,14 @@ export default function PetunjukPenggunaanAturan() {
                             1).
                         </li>
                     </ul>
-                    <p class="text-gray-700 mt-2">
+                    {/* <p class="text-gray-700 mt-2">
                         Contoh: Jika Anda yakin{" "}
                         <span class="font-semibold">70%</span>, masukkan MB ={" "}
                         <span class="font-semibold">0,7</span> dan MD ={" "}
                         <span class="font-semibold">0,1</span>.
-                    </p>
+                    </p> */}
+                    <img src="/images/petunjuk/3.png" alt="Petunjuk 1" srcset="" />
+
                 </div>
 
                 {/* <!-- Step 4 --> */}

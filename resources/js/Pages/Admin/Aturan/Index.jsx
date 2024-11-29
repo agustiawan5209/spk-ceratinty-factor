@@ -108,6 +108,24 @@ export default function DaftarAturan({
         });
     };
 
+
+    const NilaiMD = [
+        { nilai: 1.0, txt: "Sangat Yakin" },
+        { nilai: 0.8, txt: "Yakin" },
+        { nilai: 0.6, txt: "Cukup Yakin" },
+        { nilai: 0.4, txt: "Kurang Yakin" },
+        { nilai: 0.2, txt: "Tidak Tahu" },
+        { nilai: 0, txt: "Tidak" },
+    ];
+
+    const filterMeasure = (data)=>{
+        const result = NilaiMD.filter((item)=>{
+            return item.nilai == data;
+        })
+        console.log(result)
+        return result[0].txt;
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -215,6 +233,12 @@ export default function DaftarAturan({
                                         <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
                                             Gejala
                                         </th>
+                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
+                                        MB (Hipotesa Kepastian terhadap Suatu Gejala)
+                                        </th>
+                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
+                                        MD (Hipotesa Ketidakpastian terhadap Suatu Gejala)
+                                        </th>
                                         {aksi && (
                                             <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
                                                 Aksi
@@ -244,6 +268,12 @@ export default function DaftarAturan({
                                                     </td>
                                                     <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
                                                         {item.gejala.nama}
+                                                    </td>
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                        {filterMeasure(item.mb)}
+                                                    </td>
+                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
+                                                    {filterMeasure(item.md)}
                                                     </td>
                                                     <td className="py-3 px-4 border border-gray-200 text-sm text-gray-700">
                                                         <div className="flex space-x-2">
