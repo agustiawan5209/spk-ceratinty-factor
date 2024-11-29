@@ -231,7 +231,7 @@ export default function FormAturan({ auth, gejala, penyakit }) {
                                                             }
                                                             className="text-base"
                                                         >
-                                                            {item.nama}
+                                                           {index +1}. {item.nama}
                                                         </label>
                                                     </div>
                                                 </div>

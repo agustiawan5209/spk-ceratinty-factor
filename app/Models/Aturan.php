@@ -18,20 +18,22 @@ class Aturan extends Model
         'keterangan',
     ];
 
-    public function penyakit(){
-        return $this->hasOne(Penyakit::class,'id','penyakit_id');
+    public function penyakit()
+    {
+        return $this->hasOne(Penyakit::class, 'id', 'penyakit_id');
     }
-    public function gejala(){
-        return $this->hasOne(Gejala::class,'id','gejala_id');
+    public function gejala()
+    {
+        return $this->hasOne(Gejala::class, 'id', 'gejala_id');
     }
 
     public function scopeFilterBySearch($query, $search)
     {
         $query->when($search ?? null, function ($query, $search) {
-            $query->whereHas('penyakit', function($query) use ($search){
-                $query->where('nama','LIKE','%'.$search.'%');
-            })->orWhereHas('gejala', function($query) use ($search){
-                $query->where('nama','LIKE','%'.$search.'%');
+            $query->whereHas('penyakit', function ($query) use ($search) {
+                $query->where('nama', 'LIKE', '%' . $search . '%');
+            })->orWhereHas('gejala', function ($query) use ($search) {
+                $query->where('nama', 'LIKE', '%' . $search . '%');
             });
         });
     }
@@ -40,6 +42,15 @@ class Aturan extends Model
     {
         $query->when($order ?? null, function ($query, $order) {
             $query->orderBy('id', $order);
+        });
+    }
+
+    public function scopeFilterByPenyakit($query, $search)
+    {
+        $query->when($search ?? null, function ($query, $search) {
+            $query->whereHas('penyakit', function ($query) use ($search) {
+                $query->where('nama', 'LIKE', '%' . $search . '%');
+            });
         });
     }
 }

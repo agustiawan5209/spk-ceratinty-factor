@@ -177,7 +177,7 @@ function CardDetail({ title, content }) {
    return ( <div className="px-3 py-2 border-b-2 bg-blue-600">
     <span className="font-semibold text-gray-100">{title}:</span>{" "}
     <span
-        className="text-white tracking-wider"
+        className="text-white tracking-wider text-sm"
         dangerouslySetInnerHTML={{ __html: content }}
     />
 </div>);

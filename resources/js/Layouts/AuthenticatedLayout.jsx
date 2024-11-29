@@ -30,13 +30,13 @@ export default function Authenticated({ user, header, children }) {
                 id="sidebar"
                 className="hidden md:block fixed md:w-[18%] max-w-xs min-h-screen bg-gray-800"
             >
-                <nav className="w-full h-full">
+                <nav className="w-full h-full md:mt-10">
                     <div className="w-full py-4 flex justify-center">
-                        <div className="w-20 h-auto text-white">
+                        <div className="w-20 h-auto text-white bg-blue-600 p-2 rounded-md shadow-lg shadow-gray-500">
                             <ApplicationLogo />
                         </div>
                     </div>
-                    <ul className="w-full mt-10 px-2 block space-y-3 ">
+                    <ul className="w-full mt-10 px-2 block space-y-6 ">
                         <li className="w-full h-auto">
                             <NavLink
                                 href={route("dashboard")}
@@ -56,7 +56,7 @@ export default function Authenticated({ user, header, children }) {
                                     route().current("Penyakit.show")
                                 }
                             >
-                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <FontAwesomeIcon icon="fa-solid fa-hospital-user" />
                                 <span>Data Penyakit</span>
                             </NavLink>
                         </li>
@@ -69,7 +69,7 @@ export default function Authenticated({ user, header, children }) {
                                     route().current("Gejala.edit")
                                 }
                             >
-                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <FontAwesomeIcon icon="fa-solid fa-dice-five" />
                                 <span>Data Gejala</span>
                             </NavLink>
                         </li>
@@ -82,7 +82,7 @@ export default function Authenticated({ user, header, children }) {
                                     route().current("Pengobatan.edit")
                                 }
                             >
-                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <FontAwesomeIcon icon="fa-solid fa-hospital" />
                                 <span>Data Pengobatan</span>
                             </NavLink>
                         </li>
@@ -95,7 +95,7 @@ export default function Authenticated({ user, header, children }) {
                                     route().current("Aturan.edit")
                                 }
                             >
-                                <FontAwesomeIcon icon="fa-solid fa-house" />
+                                <FontAwesomeIcon icon="fa-solid fa-gears" />
                                 <span>Data Aturan</span>
                             </NavLink>
                         </li>

@@ -3,7 +3,7 @@ import { Head, Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Slider from "react-slick";
 
-export default function ShowPotensiDaerah({ auth, penyakit }) {
+export default function ShowPotensiDaerah({ auth, aturan }) {
     const settings = {
         dots: true,
         infinite: true,
@@ -13,6 +13,23 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
         autoplay: true,
         autoplaySpeed: 3000,
     };
+
+    const NilaiMD = [
+        { nilai: 1.0, txt: "Sangat Yakin" },
+        { nilai: 0.8, txt: "Yakin" },
+        { nilai: 0.6, txt: "Cukup Yakin" },
+        { nilai: 0.4, txt: "Kurang Yakin" },
+        { nilai: 0.2, txt: "Tidak Tahu" },
+        { nilai: 0, txt: "Tidak" },
+    ];
+
+    const filter = (data)=>{
+        const result = NilaiMD.filter((item)=>{
+            return item.nilai == data;
+        })
+        console.log(result)
+        return result[0].txt;
+    }
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -29,131 +46,44 @@ export default function ShowPotensiDaerah({ auth, penyakit }) {
                     <div className="bg-white shadow-md rounded-lg">
                         <section className="py-8 bg-white relative">
                             <div className="w-full flex flex-1 relative justify-center ">
-                                <Link href={route("Penyakit.index")}>
+                                <Link href={route("Aturan.index")}>
                                     <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-14 left-3 shadow-lg shadow-gray-500 bg-blue-600">
                                         Kembali
                                     </div>
                                 </Link>
-                                <h3 className="font-semibold text-base md:text-2xl leading-4">Detail Data {penyakit.nama}</h3>
+                                <h3 className="font-semibold text-base md:text-2xl leading-4">Detail Aturan {aturan.penyakit.nama}</h3>
                             </div>
                             <div className="max-w-screen-xl border-t-2 mt-4 px-6 py-4 mx-auto">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Information Section */}
-                                    <div className="mt-4">
+                                    <div className="mt-4 col-span-full">
                                         <h1 className="text-3xl font-semibold text-gray-900">
-                                            {penyakit.judul}
+                                            {aturan.penyakit.nama}
                                         </h1>
                                         <div className="space-y-4 mt-4">
                                             <InfoCard
-                                                label="Kode"
-                                                value={penyakit.kode}
+                                                label="Gejala Penyakit"
+                                                value={aturan.gejala.nama}
                                             />
                                             <InfoCard
-                                                label="Nama Penyakit"
-                                                value={penyakit.nama}
+                                                label="MB (Hipotesa Kepastian Hubungan Penyakit Terhadap Gejala"
+                                                value={filter(aturan.mb)}
+                                            />
+                                            <InfoCard
+                                                label="MD (Hipotesa Ketidakpastian Hubungan Penyakit Terhadap Gejala"
+                                                value={filter(aturan.md)}
                                             />
                                             <CardDetail
-                                                title="Keterangan Penyakit"
-                                                content={penyakit.keterangan}
-                                            />
-                                            <CardDetail
-                                                title="Cara Pencegahan Penyakit"
-                                                content={penyakit.pencegahan}
-                                            />
+                                            title={'Keterangan'}
+                                            content={aturan.keterangan}
+                                             />
                                         </div>
                                     </div>
 
-                                    {/* Carousel Section */}
-                                    <div className="w-full">
-                                        <div className="w-full bg-secondary p-6 md:p-8 rounded-lg shadow-md">
-                                            {penyakit.galeri.length > 1 ? (
-                                                <Slider {...settings}>
-                                                    {penyakit.galeri.map(
-                                                        (image, index) => (
-                                                            <div key={index}>
-                                                                <img
-                                                                    src={
-                                                                        image.image_path
-                                                                    }
-                                                                    alt={`Slide ${image.caption}`}
-                                                                    className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
-                                                                />
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </Slider>
-                                            ) : (
-                                                penyakit.galeri.map(
-                                                    (image, index) => (
-                                                        <div key={index}>
-                                                            <img
-                                                                src={
-                                                                    image.image_path
-                                                                }
-                                                                alt={`Slide ${image.caption}`}
-                                                                className="w-full rounded-lg object-cover transition-transform duration-300 hover:scale-105"
-                                                            />
-                                                        </div>
-                                                    )
-                                                )
-                                            )}
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </section>
 
-                        {/* Table of Pengobatan */}
-                        <div className="p-6 overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                                <thead>
-                                    <tr className="bg-blue-600 text-white">
-                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
-                                            No.
-                                        </th>
-                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
-                                            Nama Penyakit
-                                        </th>
-                                        <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
-                                            Keterangan Cara Pengobatan
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {penyakit.pengobatan.length > 0 ? (
-                                        penyakit.pengobatan.map(
-                                            (item, index) => (
-                                                <tr
-                                                    key={item.id}
-                                                    className="hover:bg-gray-50 transition duration-200"
-                                                >
-                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-black">
-                                                        {index + 1}
-                                                    </td>
-                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-black">
-                                                        {penyakit.nama}
-                                                    </td>
-                                                    <td className="py-3 px-4 border border-gray-200 text-sm text-black">
-                                                        {sanitizeText(
-                                                            item.keterangan
-                                                        )}
-                                                    </td>
-                                                </tr>
-                                            )
-                                        )
-                                    ) : (
-                                        <tr>
-                                            <td
-                                                colSpan="3"
-                                                className="py-3 px-4 text-center text-sm text-gray -500"
-                                            >
-                                                Tidak ada data yang ditemukan.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>

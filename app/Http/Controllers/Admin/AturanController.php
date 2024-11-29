@@ -21,10 +21,12 @@ class AturanController extends Controller
     {
         return Inertia::render('Admin/Aturan/Index', [
             'aturan' => Aturan::orderBy('id', 'desc')
-            ->with(['penyakit', 'gejala'])
+                ->with(['penyakit', 'gejala'])
                 ->filterBySearch(Request::input('search'))
+                ->filterByPenyakit(Request::input('penyakit'))
                 ->paginate(10)->withQueryString(),
             'filter' => Request::only('search', 'order', 'filter'),
+            'penyakit'=> Penyakit::all(),
             'can' => [
                 'add' => Auth::user()->can('add aturan'),
                 'edit' => Auth::user()->can('edit aturan'),
@@ -40,8 +42,8 @@ class AturanController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Aturan/Form', [
-            'penyakit'=> Penyakit::all(),
-            'gejala'=> Gejala::all(),
+            'penyakit' => Penyakit::all(),
+            'gejala' => Gejala::all(),
         ]);
     }
 
@@ -56,23 +58,35 @@ class AturanController extends Controller
 
             $length = count($aturan);
 
-            for($i = 0; $i < $length; $i++){
+            for ($i = 0; $i < $length; $i++) {
 
                 $cf = $aturan[$i]['mb'] - $aturan[$i]['md'];
-                Aturan::create([
-                    'penyakit_id'=> $Penyakit->id,
-                    'gejala_id'=> $aturan[$i]['id'],
-                    'mb'=> $aturan[$i]['mb'],
-                    'md'=> $aturan[$i]['md'],
-                    'cf'=> $cf,
-                    'keterangan'=> $aturan[$i]['keterangan']
-                ]);
+                $tabel_aturan = Aturan::where('penyakit_id', $request->penyakit_id)
+                    ->where('gejala_id', $aturan[$i]['id'])
+                    ->first();
+                if ($tabel_aturan == null) {
+                    Aturan::create([
+                        'penyakit_id' => $Penyakit->id,
+                        'gejala_id' => $aturan[$i]['id'],
+                        'mb' => $aturan[$i]['mb'],
+                        'md' => $aturan[$i]['md'],
+                        'cf' => $cf,
+                        'keterangan' => $aturan[$i]['keterangan']
+                    ]);
+                } else {
+                    $tabel_aturan->update([
+                        'mb' => $aturan[$i]['mb'],
+                        'md' => $aturan[$i]['md'],
+                        'cf' => $cf,
+                        'keterangan' => $aturan[$i]['keterangan']
+                    ]);
+                }
             }
 
 
             return redirect()->route('Aturan.index')->with('success', 'Data Berhasil Di Tambahkan');
         } catch (\Exception $e) {
-            return redirect()->route('Aturan.index')->with('error', $e->getMessage() .' '. $e->getLine());
+            return redirect()->route('Aturan.index')->with('error', $e->getMessage() . ' ' . $e->getLine());
         }
     }
 
@@ -82,7 +96,7 @@ class AturanController extends Controller
     public function show(Aturan $aturan)
     {
         return Inertia::render('Admin/Aturan/Show', [
-            'aturan' => $aturan->find(Request::input('slug')),
+            'aturan' => $aturan->with(['penyakit', 'gejala'])->find(Request::input('slug')),
         ]);
     }
 
@@ -92,16 +106,17 @@ class AturanController extends Controller
     public function edit(Aturan $aturan)
     {
         return Inertia::render('Admin/Aturan/Edit', [
-            'aturan' => $aturan->find(Request::input('slug')),
-            'penyakit'=> Penyakit::all(),
-            'gejala'=> Gejala::all(),
+            'aturan' => $aturan->with(['penyakit', 'gejala'])->find(Request::input('slug')),
+            'penyakit' => Penyakit::all(),
+            'gejala' => Gejala::all(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAturanRequest $request, Aturan $aturan) {
+    public function update(UpdateAturanRequest $request, Aturan $aturan)
+    {
         try {
             $aturan = Aturan::find(Request::input('slug'));
 
@@ -113,7 +128,7 @@ class AturanController extends Controller
 
             return redirect()->route('Aturan.index')->with('success', 'Data Berhasil Di Ubah');
         } catch (\Exception $e) {
-            return redirect()->route('Aturan.index')->with('error', $e->getMessage() .' '. $e->getLine());
+            return redirect()->route('Aturan.index')->with('error', $e->getMessage() . ' ' . $e->getLine());
         }
     }
 
@@ -127,7 +142,7 @@ class AturanController extends Controller
 
             return redirect()->route('Aturan.index')->with('success', 'Data Berhasil Di Hapus');
         } catch (\Exception $e) {
-            return redirect()->route('Aturan.index')->with('error', $e->getMessage() .' '. $e->getLine());
+            return redirect()->route('Aturan.index')->with('error', $e->getMessage() . ' ' . $e->getLine());
         }
     }
 }

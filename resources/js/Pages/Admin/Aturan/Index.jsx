@@ -9,8 +9,7 @@ export default function DaftarAturan({
     auth,
     aturan,
     can,
-    topik,
-    kategori,
+    penyakit,
 }) {
     // Membuat form untuk menghapus dan mencari data aturan
     const {
@@ -55,7 +54,7 @@ export default function DaftarAturan({
     const [FilterData, setFilterData] = useState({
         topik: "",
         kategori: "",
-        status: "",
+        penyakit: "",
     });
 
     const handleFilter = (e) => {
@@ -161,13 +160,7 @@ export default function DaftarAturan({
                     <div className="bg-white shadow-md sm:rounded-lg p-6">
                         {/* Search and Add Button */}
                         <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-                            <input
-                                type="search"
-                                placeholder="Cari aturan..."
-                                value={search}
-                                onChange={handleSearch}
-                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-                            />
+
                             {can.add && (
                                 <Link href={route("Aturan.create")}>
                                     <PrimaryButton
@@ -179,7 +172,36 @@ export default function DaftarAturan({
                                 </Link>
                             )}
                         </div>
-                        {/* Table of Topik */}
+
+                         {/* Filter Data */}
+                         <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+                            <ul className="inline-flex space-x-3">
+                            <input
+                                type="search"
+                                placeholder="Cari aturan..."
+                                value={search}
+                                onChange={handleSearch}
+                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                            />
+                               {penyakit.length > 0 &&  <li className="px-2 border-x border-gray-300">
+                                    <select
+                                        id="filter_penyakit"
+                                        value={FilterData.penyakit}
+                                        onChange={handleFilter}
+                                        name="penyakit"
+                                        className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="" >
+                                            Pilih Penyakit----
+                                        </option>
+                                        {penyakit.map((item, index)=>(
+                                            <option key={item.id} value={item.nama}>{item.nama}</option>
+                                        ))}
+                                    </select>
+                                </li>}
+                            </ul>
+                        </div>
+                        {/* Table of Aturan */}
                         <div className="mt-6 overflow-x-auto rounded-t-md">
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                                 <thead>
