@@ -28,15 +28,15 @@ export default function Authenticated({ user, header, children }) {
 
             <section
                 id="sidebar"
-                className="hidden md:block fixed md:w-[18%] max-w-xs min-h-screen bg-gray-800"
+                className="hidden md:block fixed md:w-[18%] max-w-xs  min-h-screen bg-gray-800"
             >
-                <nav className="w-full h-full md:mt-10">
+                <nav className="w-full h-full md:mt-10 overflow-y-auto">
                     <div className="w-full py-4 flex justify-center">
                         <div className="w-20 h-auto text-white bg-blue-600 p-2 rounded-md shadow-lg shadow-gray-500">
                             <ApplicationLogo />
                         </div>
                     </div>
-                    <ul className="w-full mt-10 px-2 block space-y-6 ">
+                    <ul className="w-full h-max mt-10 px-2 block space-y-6 overflow-y-auto">
                         <li className="w-full h-auto">
                             <NavLink
                                 href={route("dashboard")}
@@ -97,6 +97,18 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 <FontAwesomeIcon icon="fa-solid fa-gears" />
                                 <span>Data Aturan</span>
+                            </NavLink>
+                        </li>
+                        <li className="w-full h-auto">
+                            <NavLink
+                                href={route("Test.test")}
+                                active={
+                                    route().current("Test.test") ||
+                                    route().current("Test.result")
+                                }
+                            >
+                                <FontAwesomeIcon icon="fa-solid fa-gear" />
+                                <span>Data Uji</span>
                             </NavLink>
                         </li>
                     </ul>
