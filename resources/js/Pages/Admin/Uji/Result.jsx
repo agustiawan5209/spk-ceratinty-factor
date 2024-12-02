@@ -9,6 +9,8 @@ import "react-quill/dist/quill.snow.css";
 import LoadingPage from "@/Components/LoadingPage";
 import Modal from "@/Components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DetailPenyakit from "@/Components/Web/DetailPenyakit";
+import Popover from "@/Components/Web/PopOver";
 export default function FormAturan({ auth, aturan, dataCF, result }) {
     const { data, setData, get, processing, errors } = useForm({
         aturan: [],
@@ -40,7 +42,7 @@ export default function FormAturan({ auth, aturan, dataCF, result }) {
                         </div>
                         <div className="p-2 md:p-4 mt-10">
                             <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
-                                <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-4xl">
+                                <div className="bg-white rounded-lg shadow-lg md:p-4 w-full max-w-5xl">
                                     <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
                                         Hasil Diagnosa Penyakit Ayam Broiler
                                     </h1>
@@ -124,10 +126,11 @@ export default function FormAturan({ auth, aturan, dataCF, result }) {
                                                         className="text-gray-600"
                                                     >
                                                         <strong className="text-blue-500">
-                                                            Penyakit{" "}
-                                                            {item.penyakit.nama}:
-                                                        </strong>{" "}
-                                                        {(item.cf * 100).toFixed(2)} (%)
+                                                            <Popover
+                                                            title={`Penyakit ${item.penyakit.nama} :${(item.cf * 100).toFixed(2)}% `}
+                                                            content={item.penyakit.keterangan}
+                                                            />
+                                                        </strong>
                                                     </li>
                                                 )
                                             )}
@@ -140,11 +143,11 @@ export default function FormAturan({ auth, aturan, dataCF, result }) {
                                             Hasil Diagnosis
                                         </h2>
                                         {result.length > 0 ? (
-                                            <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded">
+                                            <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded">
                                                 <p className="font-semibold">
                                                     Penyakit yang paling
                                                     mungkin:{" "}
-                                                    <span className="text-green-900">{`Penyakit ID ${result[0].penyakit.nama}`}</span>
+                                                    <span className="text-blue-900">{`Penyakit ID ${result[0].penyakit.nama}`}</span>
                                                 </p>
                                                 <p className="text-sm mt-2">
                                                     Nilai CF:{" "}
@@ -152,6 +155,7 @@ export default function FormAturan({ auth, aturan, dataCF, result }) {
                                                         result[0].cf * 100
                                                     ).toFixed(2)}%`}
                                                 </p>
+                                                <DetailPenyakit penyakit={result[0].penyakit} />
                                             </div>
                                         ) : (
                                             <div className="text-gray-600">
