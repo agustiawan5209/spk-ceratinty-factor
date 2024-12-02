@@ -39,12 +39,12 @@ export default function EditAturan({ auth, gejala, penyakit, aturan }) {
         });
     };
     const NilaiMB = [
-        { nilai: 1.00, txt: "Sangat Yakin" },
-        { nilai: 0.80, txt: "Yakin" },
-        { nilai: 0.60, txt: "Cukup Yakin" },
-        { nilai: 0.40, txt: "Kurang Yakin" },
-        { nilai: 0.20, txt: "Tidak Tahu" },
-        { nilai: 0.00, txt: "Tidak" },
+        { nilai: 1.0, txt: "Sangat Yakin" },
+        { nilai: 0.8, txt: "Yakin" },
+        { nilai: 0.6, txt: "Cukup Yakin" },
+        { nilai: 0.4, txt: "Kurang Yakin" },
+        { nilai: 0.2, txt: "Tidak yakin" },
+
     ];
     return (
         <AuthenticatedLayout

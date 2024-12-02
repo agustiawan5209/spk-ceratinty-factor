@@ -27,7 +27,7 @@ class UpdateAturanRequest extends FormRequest
             'gejala_id'=> 'required|exists:gejalas,id',
             'mb'=> 'required|decimal:0,1',
             'md'=> 'required|decimal:0,1',
-            'keterangan'=> 'required|string|max:150',
+            'keterangan'=> 'nullable|string|max:150',
         ];
     }
 }

@@ -87,16 +87,16 @@ export default function FormAturan({ auth, gejala, penyakit }) {
         { nilai: 0.8, txt: "Yakin" },
         { nilai: 0.6, txt: "Cukup Yakin" },
         { nilai: 0.4, txt: "Kurang Yakin" },
-        { nilai: 0.2, txt: "Tidak Tahu" },
-        { nilai: 0, txt: "Tidak" },
+        { nilai: 0.2, txt: "Tidak yakin" },
+
     ];
     const NilaiMD = [
         { nilai: 1.0, txt: "Sangat Yakin" },
         { nilai: 0.8, txt: "Yakin" },
         { nilai: 0.6, txt: "Cukup Yakin" },
         { nilai: 0.4, txt: "Kurang Yakin" },
-        { nilai: 0.2, txt: "Tidak Tahu" },
-        { nilai: 0, txt: "Tidak" },
+        { nilai: 0.2, txt: "Tidak yakin" },
+
     ];
     return (
         <AuthenticatedLayout

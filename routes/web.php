@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AturanController;
 use App\Http\Controllers\Admin\GejalaController;
 use App\Http\Controllers\Admin\PengobatanController;
 use App\Http\Controllers\Admin\PenyakitController;
+use App\Http\Controllers\DataUjiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', 'store')->name('store');
             Route::put('/update', 'update')->name('update');
             Route::delete('/destroy', 'destroy')->name('destroy');
+        });
+    });
+
+
+    // Router Aturan
+    Route::group(['prefix' => 'test-diagnosa', 'as' => 'Test.'], function () {
+        Route::controller(DataUjiController::class)->group(function () {
+            Route::get('/', 'admin')->name('test');
+            Route::get('/hasil', 'result')->name('result');
+            Route::post('/hasil', 'store')->name('store');
         });
     });
 });
