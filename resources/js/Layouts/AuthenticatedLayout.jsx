@@ -111,6 +111,18 @@ export default function Authenticated({ user, header, children }) {
                                 <span>Data Uji</span>
                             </NavLink>
                         </li>
+                        <li className="w-full h-auto">
+                            <NavLink
+                                href={route("Diagnosa.index")}
+                                active={
+                                    route().current("Diagnosa.index") ||
+                                    route().current("Diagnosa.show")
+                                }
+                            >
+                                <FontAwesomeIcon icon="fa-solid fa-calendar-days" />
+                                <span>Riwayat Diagnosa</span>
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </section>

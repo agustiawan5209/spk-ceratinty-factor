@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aturan;
+use App\Models\Diagnosa;
 use App\Models\Gejala;
 use App\Models\Penyakit;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -20,6 +22,9 @@ class DataUjiController extends Controller
 
     public function result()
     {
+        if(!Session::has('hasil')){
+            return redirect()->route('Test.test');
+        }
         $data = Session::get('hasil');
         // dd($data);
         return Inertia::render('Admin/Uji/Result', [
@@ -86,6 +91,16 @@ class DataUjiController extends Controller
             'aturan'=> $aturan,
             'result'=> $result,
         ));
+
+        Diagnosa::create([
+            'nama'=> 'Admin',
+            'diagnosa'=> array(
+                'dataCF'=> array_values($data_cf),
+                'aturan'=> $aturan,
+                'result'=> $result,
+            ),
+            'tgl'=> Carbon::now()->format('Y-m-d'),
+        ]);
         return redirect()->route('Test.result')->with('success', 'Berhasil Menghitung CF ');
     }
 }
