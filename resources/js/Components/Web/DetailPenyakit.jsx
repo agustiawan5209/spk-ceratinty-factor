@@ -69,7 +69,7 @@ export default function DetailPenyakit({ auth, penyakit }) {
             <div className="p-6 overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead>
-                        <tr className="bg-blue-600 text-white">
+                        <tr className="bg-green-600 text-white">
                             <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
                                 No.
                             </th>
@@ -130,7 +130,7 @@ function InfoCard({ label, value }) {
 
 function CardDetail({ title, content }) {
     return (
-        <div className="px-3 py-2 border-b-2 bg-blue-600">
+        <div className="px-3 py-2 border-b-2 bg-green-600">
             <span className="font-semibold text-gray-100">{title}:</span>{" "}
             <span
                 className="text-white tracking-wider text-sm"

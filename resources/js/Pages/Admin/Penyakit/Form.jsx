@@ -74,7 +74,7 @@ export default function FormPenyakit({ auth }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white relative shadow-sm sm:rounded-lg">
-                        <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                        <div className="max-w-xs w-32 relative -top-5 left-3 shadow-lg shadow-gray-500 bg-green-600">
                             <Link href={route("Penyakit.index")}>
                                 <div className="w-full p-2 md:p-4 text-base text-white">
                                     Kembali
@@ -107,7 +107,7 @@ export default function FormPenyakit({ auth }) {
                                         className="mt-2"
                                     />
                                     <div className="w-full">
-                                        <div className="flex gap-4 p-3 mt-4 w-max bg-blue-200">
+                                        <div className="flex gap-4 p-3 mt-4 w-max bg-green-200">
                                             {data.images.map((image, index) => (
                                                 <div
                                                     key={index}

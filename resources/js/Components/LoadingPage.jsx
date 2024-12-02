@@ -8,7 +8,7 @@ const LoadingPage = () => {
 
             <div className="relative flex flex-col items-center space-y-4">
                 {/* Animated Spinner */}
-                <div className="w-16 h-16 border-4 border-t-transparent border-blue-600 rounded-full animate-spin"></div>
+                <div className="w-16 h-16 border-4 border-t-transparent border-green-600 rounded-full animate-spin"></div>
 
                 {/* Loading Text */}
                 <p className="text-lg font-medium text-gray-600">

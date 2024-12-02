@@ -32,7 +32,7 @@ export default function Authenticated({ user, header, children }) {
             >
                 <nav className="w-full h-full md:mt-10 overflow-y-auto">
                     <div className="w-full py-4 flex justify-center">
-                        <div className="w-20 h-auto text-white bg-blue-600 p-2 rounded-md shadow-lg shadow-gray-500">
+                        <div className="w-20 h-auto text-white bg-green-600 p-2 rounded-md shadow-lg shadow-gray-500">
                             <ApplicationLogo />
                         </div>
                     </div>

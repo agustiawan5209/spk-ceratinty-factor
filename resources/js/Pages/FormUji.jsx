@@ -76,7 +76,7 @@ export default function FormUji({ auth, gejala }) {
                                     <col className="w-[50%]" />
                                 </colgroup>
                                 <thead>
-                                    <tr className="bg-blue-500">
+                                    <tr className="bg-green-500">
                                         <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
                                             No.
                                         </th>
@@ -120,7 +120,7 @@ export default function FormUji({ auth, gejala }) {
                                                                     item
                                                                 )
                                                             }
-                                                            className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 "
+                                                            className="w-6 h-6 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 "
                                                         />
                                                         <label
                                                             htmlFor={
@@ -149,7 +149,7 @@ export default function FormUji({ auth, gejala }) {
                                                                     item
                                                                 )
                                                             }
-                                                            className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 "
+                                                            className="w-6 h-6 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 "
                                                         />
                                                         <label
                                                             htmlFor={

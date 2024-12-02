@@ -205,12 +205,12 @@ export default function DaftarGejala({ auth, gejala, can }) {
                                 placeholder="Cari gejala..."
                                 value={search}
                                 onChange={handleSearch}
-                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
                             />
                             {can.add && <PrimaryButton
                                 type="button"
                                 onClick={openModalAdd}
-                                className="mt-2 sm:mt-0 p-2 bg-blue-500 text-white rounded-lg hover:bg-primary transition duration-200"
+                                className="mt-2 sm:mt-0 p-2 bg-green-500 text-white rounded-lg hover:bg-primary transition duration-200"
                             >
                                 Tambah Data
                             </PrimaryButton>}
@@ -220,7 +220,7 @@ export default function DaftarGejala({ auth, gejala, can }) {
                         <div className="mt-6 overflow-x-auto">
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                                 <thead>
-                                    <tr className="bg-blue-600 text-white">
+                                    <tr className="bg-green-600 text-white">
                                         <th className="py-3 px-4 border border-gray-200 text-left text-sm font-semibold">
                                             No.
                                         </th>
@@ -260,7 +260,7 @@ export default function DaftarGejala({ auth, gejala, can }) {
                                                         {can.show && (
                                                             <Link
                                                                 href={`/gejala/${item.id}`}
-                                                                className="text-blue-500 hover:underline"
+                                                                className="text-green-500 hover:underline"
                                                             >
                                                                 Detail
                                                             </Link>
@@ -316,7 +316,7 @@ export default function DaftarGejala({ auth, gejala, can }) {
                                     href={link.url}
                                     className={`px-3 py-2 ${
                                         link.active
-                                            ? "bg-blue-500 text-white"
+                                            ? "bg-green-500 text-white"
                                             : "bg-gray-200"
                                     } rounded-lg mx-1`}
                                     dangerouslySetInnerHTML={{

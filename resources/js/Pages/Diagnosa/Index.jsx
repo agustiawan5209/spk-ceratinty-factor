@@ -160,14 +160,14 @@ export default function DaftarDiagnosa({ auth, diagnosa, can }) {
                                 placeholder="Cari diagnosa..."
                                 value={search}
                                 onChange={handleSearch}
-                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
                             />
                         </div>
                         {/* Table of Topik */}
                         <div className="mt-6 overflow-x-auto rounded-t-md">
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                                 <thead>
-                                    <tr className="bg-blue-500">
+                                    <tr className="bg-green-500">
                                         <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
                                             No.
                                         </th>
@@ -265,7 +265,7 @@ export default function DaftarDiagnosa({ auth, diagnosa, can }) {
                                     href={link.url}
                                     className={`px-3 py-2 ${
                                         link.active
-                                            ? "bg-blue-500 text-white"
+                                            ? "bg-green-500 text-white"
                                             : "bg-gray-200"
                                     } rounded-lg mx-1`}
                                     dangerouslySetInnerHTML={{

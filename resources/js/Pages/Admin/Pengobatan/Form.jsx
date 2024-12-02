@@ -88,7 +88,7 @@ export default function FormPengobatan({
                                 onChange={(e) =>
                                     setData("penyakit_id", e.target.value)
                                 }
-                                className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                             >
                                 <option value="">
                                     Pilih Data Penyakit-------

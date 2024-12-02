@@ -47,7 +47,7 @@ export default function ShowPotensiDaerah({ auth, aturan }) {
                         <section className="py-8 bg-white relative">
                             <div className="w-full flex flex-1 relative justify-center ">
                                 <Link href={route("Aturan.index")}>
-                                    <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-14 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                                    <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-14 left-3 shadow-lg shadow-gray-500 bg-green-600">
                                         Kembali
                                     </div>
                                 </Link>
@@ -104,7 +104,7 @@ function InfoCard({ label, value }) {
 }
 
 function CardDetail({ title, content }) {
-   return ( <div className="px-3 py-2 border-b-2 bg-blue-600">
+   return ( <div className="px-3 py-2 border-b-2 bg-green-600">
     <span className="font-semibold text-gray-100">{title}:</span>{" "}
     <span
         className="text-white tracking-wider"

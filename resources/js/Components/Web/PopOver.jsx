@@ -14,7 +14,7 @@ const Popover = ({ title, content }) => {
             {/* Tombol untuk memicu popover */}
             <button
                 onMouseEnter={togglePopover} onMouseLeave={togglePopover}
-                className="px-4 py-2 bg-blue-500 text-sm md:text-base text-white rounded-md hover:bg-blue-600 focus:outline-none"
+                className="px-4 py-2 bg-green-500 text-sm md:text-base text-white rounded-md hover:bg-green-600 focus:outline-none"
             >
                 {title}
             </button>

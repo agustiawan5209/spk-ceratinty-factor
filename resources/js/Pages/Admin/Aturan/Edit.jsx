@@ -63,7 +63,7 @@ export default function EditAturan({ auth, gejala, penyakit, aturan }) {
                     <div className="bg-white relative shadow-sm sm:rounded-lg">
                         <div className="w-full flex flex-1 relative justify-end ">
                             <Link href={route("Aturan.index")}>
-                                <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-8 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                                <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-8 left-3 shadow-lg shadow-gray-500 bg-green-600">
                                     Kembali
                                 </div>
                             </Link>
@@ -91,7 +91,7 @@ export default function EditAturan({ auth, gejala, penyakit, aturan }) {
                                                     e.target.value
                                                 )
                                             }
-                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                         >
                                             <option value="">
                                                 Pilih Data Penyakit-------
@@ -127,7 +127,7 @@ export default function EditAturan({ auth, gejala, penyakit, aturan }) {
                                                 )
                                             }
                                             disabled={true}
-                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                         >
                                             <option value="">
                                                 Pilih Data Penyakit-------
@@ -160,7 +160,7 @@ export default function EditAturan({ auth, gejala, penyakit, aturan }) {
                                             onChange={(e) =>
                                                 setData('mb', e.target.value)
                                             }
-                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                         >
                                             <option value="">
                                                 Pilih Nilai MB-------
@@ -193,7 +193,7 @@ export default function EditAturan({ auth, gejala, penyakit, aturan }) {
                                             onChange={(e) =>
                                                 setData('md', e.target.value)
                                             }
-                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                         >
                                             <option value="">
                                                 Pilih Nilai MD-------

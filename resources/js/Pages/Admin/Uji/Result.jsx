@@ -33,7 +33,7 @@ export default function FormAturan({ auth, aturan, dataCF, result }) {
                     <div className="bg-white relative shadow-sm sm:rounded-lg">
                         <div className="w-full flex flex-1 relative justify-end ">
                             {/* <Link href={route().}>
-                                <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-8 left-3 shadow-lg shadow-gray-500 bg-blue-600">
+                                <div className="max-w-xs w-32 p-2 md:p-4 absolute text-base text-white -top-8 left-3 shadow-lg shadow-gray-500 bg-green-600">
                                     Kembali
                                 </div>
                             </Link> */}

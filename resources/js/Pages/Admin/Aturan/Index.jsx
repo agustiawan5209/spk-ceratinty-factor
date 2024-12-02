@@ -183,7 +183,7 @@ export default function DaftarAturan({
                                 <Link href={route("Aturan.create")}>
                                     <PrimaryButton
                                         type="button"
-                                        className="mt-2 sm:mt-0 p-2 bg-blue-500 text-white rounded-lg hover:bg-primary transition duration-200"
+                                        className="mt-2 sm:mt-0 p-2 bg-green-500 text-white rounded-lg hover:bg-primary transition duration-200"
                                     >
                                         Tambah Data
                                     </PrimaryButton>
@@ -199,7 +199,7 @@ export default function DaftarAturan({
                                 placeholder="Cari aturan..."
                                 value={search}
                                 onChange={handleSearch}
-                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
                             />
                                {penyakit.length > 0 &&  <li className="px-2 border-x border-gray-300">
                                     <select
@@ -207,7 +207,7 @@ export default function DaftarAturan({
                                         value={FilterData.penyakit}
                                         onChange={handleFilter}
                                         name="penyakit"
-                                        className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="block appearance-none w-full bg-white border border-gray-300 rounded-lg shadow-sm py-2 pl-3 pr-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                     >
                                         <option value="" >
                                             Pilih Penyakit----
@@ -223,7 +223,7 @@ export default function DaftarAturan({
                         <div className="mt-6 overflow-x-auto rounded-t-md">
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                                 <thead>
-                                    <tr className="bg-blue-500">
+                                    <tr className="bg-green-500">
                                         <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
                                             No.
                                         </th>
@@ -285,7 +285,7 @@ export default function DaftarAturan({
                                                                             slug: item.id,
                                                                         }
                                                                     )}
-                                                                    className="bg-blue-500 text-white p-1 rounded-md hover:underline"
+                                                                    className="bg-green-500 text-white p-1 rounded-md hover:underline"
                                                                 >
                                                                     <FontAwesomeIcon icon="fa-solid fa-eye" />
                                                                 </Link>
@@ -343,7 +343,7 @@ export default function DaftarAturan({
                                     href={link.url}
                                     className={`px-3 py-2 ${
                                         link.active
-                                            ? "bg-blue-500 text-white"
+                                            ? "bg-green-500 text-white"
                                             : "bg-gray-200"
                                     } rounded-lg mx-1`}
                                     dangerouslySetInnerHTML={{

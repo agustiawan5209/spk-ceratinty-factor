@@ -38,7 +38,7 @@ export default function FlashMessage() {
                 {type == "success" ? (
                     <div
                         id="alert-border-3"
-                        className="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50  "
+                        className="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50  "
                         role="alert"
                     >
                         <FontAwesomeIcon  className="flex-shrink-0 w-4 h-4" icon="fa-solid fa-triangle-exclamation" />
@@ -46,7 +46,7 @@ export default function FlashMessage() {
                         <div className="ms-3 text-base font-medium">{message}</div>
                         <button
                             type="button"
-                            className="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 "
+                            className="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 "
                             data-dismiss-target="#alert-border-3"
                             aria-label="Close"
                         >

@@ -1,55 +1,107 @@
 import { Link, Head } from "@inertiajs/react";
 import Navbar from "@/Components/Navbar/Navbar";
+import HomeLayout from "@/Layouts/HomeLayout";
+import CardContent from "@/Components/Web/CardContent";
+
 export default function Welcome({ auth }) {
     return (
-        <>
-            <Head title="Welcome" />
-            <Navbar></Navbar>
-
+        <HomeLayout auth={auth} title={"welcome"}>
             {/* Content */}
             <section className="bg-white">
-                <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-                    <div className="mr-auto place-self-center lg:col-span-7">
-                        <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
-                            SISTEM PAKAR
-                        </h1>
-                        <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl">
-                            MENDIAGNOSA PENYAKIT AYAM BROILER MENGGUNAKAN METODE
-                            CERTAINTY FACTOR
-                        </p>
-                        <a
-                            href="#"
-                            className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 "
-                        >
-                            Get started
-                            <svg
-                                className="w-5 h-5 ml-2 -mr-1"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                    clipRule="evenodd"
-                                ></path>
-                            </svg>
-                        </a>
-                        <a
-                            href="#"
-                            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-blue-900 border border-blue-300 rounded-lg hover:bg-blue-100 focus:ring-4 focus:ring-blue-100"
-                        >
-                            Speak to Sales
-                        </a>
+                <div className="flex flex-wrap">
+                    <div className="w-full sm:w-8/12 mb-10">
+                        <div className="container mx-auto h-full sm:p-10">
+                            <header className="container px-4 lg:flex mt-10 items-center h-full lg:mt-0">
+                                <div className="w-full">
+                                    <h1 className="text-4xl lg:text-6xl font-bold">
+                                        Sistem Pakar{" "}
+                                        <span className="text-green-700">
+                                            MENDIAGNOSA PENYAKIT AYAM BROILER
+                                        </span>{" "}
+                                        MENGGUNAKAN METODE CERTAINTY FACTOR
+                                    </h1>
+                                    <div className="w-20 h-2 bg-green-700 my-4"></div>
+                                    <p className="text-xl mb-10">
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Recusandae maiores
+                                        neque eaque ea odit placeat, tenetur
+                                        illum distinctio nulla voluptatum a
+                                        corrupti beatae tempora aperiam quia id
+                                        aliquam possimus aut.
+                                    </p>
+                                    <button className="bg-green-500 text-white text-2xl font-medium px-4 py-2 rounded shadow">
+                                       Baca Lebih Lanjut..
+                                    </button>
+                                </div>
+                            </header>
+                        </div>
                     </div>
-                    <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-                        <img
-                            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
-                            alt="mockup"
-                        />
-                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1536147116438-62679a5e01f2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        alt="Leafs"
+                        className="w-full h-48 object-cover sm:h-screen sm:w-4/12"
+                    />
                 </div>
             </section>
-        </>
+
+            {/* Section content */}
+
+            <main className="text-gray-900 container mx-auto px-2 sm:px-4 lg:px-8">
+                <section id="features" className="py-5 lg:pb-3 lg:pt-7">
+                    <div className="container mx-auto text-center">
+                        <h2 className="text-3xl lg:text-5xl font-semibold">
+                            Fitur Utama Sistem Pakar Diagnosa Ayam Broiler
+                        </h2>
+                        <div className="flex flex-col sm:flex-row sm:-mx-3 mt-12">
+                            <div className="flex-1 px-3">
+                                <div className="p-12 rounded-lg border border-solid border-gray-200 mb-8 shadow-md">
+                                    <p className="font-semibold text-xl">
+                                        Diagnosa Penyakit Akurat
+                                    </p>
+                                    <p className="mt-4">
+                                        Sistem ini menggunakan metode{" "}
+                                        <strong>Certainty Factor</strong> untuk
+                                        memberikan diagnosa akurat berdasarkan
+                                        gejala yang diinputkan. Memberikan
+                                        tingkat kepastian diagnosis yang jelas.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex-1 px-3">
+                                <div className="p-12 rounded-lg border border-solid border-gray-200 mb-8 shadow-md">
+                                    <p className="font-semibold text-xl">
+                                        Basis Pengetahuan Luas
+                                    </p>
+                                    <p className="mt-4">
+                                        Mengandung data dari{" "}
+                                        <strong>7 penyakit utama</strong> dan{" "}
+                                        <strong>32 gejala</strong> yang umum
+                                        terjadi pada ayam broiler. Data ini
+                                        diolah oleh pakar veteriner untuk
+                                        memastikan keakuratan.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex-1 px-3">
+                                <div className="p-12 rounded-lg border border-solid border-gray-200 mb-8 shadow-md">
+                                    <p className="font-semibold text-xl">
+                                        Rekomendasi Perawatan
+                                    </p>
+                                    <p className="mt-4">
+                                        Setelah diagnosis, sistem memberikan
+                                        rekomendasi penanganan dan perawatan
+                                        untuk setiap penyakit yang terdeteksi,
+                                        membantu peternak mengambil keputusan
+                                        yang tepat.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Konten Gambar Dari Sistem */}
+            </main>
+        </HomeLayout>
     );
 }

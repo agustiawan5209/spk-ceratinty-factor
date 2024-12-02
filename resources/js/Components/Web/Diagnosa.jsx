@@ -10,7 +10,7 @@ export default function Diagnosa({ auth, aturan, dataCF, result }) {
         <div className="p-2 md:p-4 mt-10">
             <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
                 <div className="bg-white rounded-lg shadow-lg md:p-4 w-full max-w-5xl">
-                    <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
+                    <h1 className="text-3xl font-bold text-center text-green-600 mb-6">
                         Hasil Diagnosa Penyakit Ayam Broiler
                     </h1>
 
@@ -22,7 +22,7 @@ export default function Diagnosa({ auth, aturan, dataCF, result }) {
                         <div className="overflow-x-auto">
                             <table className="min-w-full bg-white border border-gray-200">
                                 <thead>
-                                    <tr className="bg-blue-500 text-white">
+                                    <tr className="bg-green-500 text-white">
                                         <th className="py-2 px-4 border">No</th>
                                         <th className="py-2 px-4 border">
                                             Gejala ID
@@ -78,7 +78,7 @@ export default function Diagnosa({ auth, aturan, dataCF, result }) {
                                         key={penyakitId}
                                         className="text-gray-600 list-none"
                                     >
-                                        <strong className="text-blue-500">
+                                        <strong className="text-green-500">
                                             <Popover
                                                 title={`Penyakit ${
                                                     item.penyakit.nama
@@ -102,10 +102,10 @@ export default function Diagnosa({ auth, aturan, dataCF, result }) {
                             Hasil Diagnosis
                         </h2>
                         {result.length > 0 ? (
-                            <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded">
+                            <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded">
                                 <p className="font-semibold">
                                     Penyakit yang paling mungkin:{" "}
-                                    <span className="text-blue-900">{`Penyakit ID ${result[0].penyakit.nama}`}</span>
+                                    <span className="text-green-900">{`Penyakit ID ${result[0].penyakit.nama}`}</span>
                                 </p>
                                 <p className="text-2xl mt-2">
                                     Nilai CF:{" "}
