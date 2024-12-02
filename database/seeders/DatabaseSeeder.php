@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PenyakitSeeder::class,
             PengobatanSeeder::class,
             GejalaSeeder::class,
+            AturanSeeder::class,
         ]);
     }
 }

@@ -15,8 +15,14 @@ class DataUjiController extends Controller
 {
     public function admin()
     {
+
+        $gejala =Gejala::all();
+
+        if($gejala->count() == 0){
+            return redirect()->route('dashboard')->with('error', 'Maaf Data Gejala Tidak Boleh Kosong Untuk Melakukan Pengujian Dan Mengakses Halaman');
+        }
         return Inertia::render("Admin/Uji/Index", [
-            'gejala' => Gejala::all(),
+            'gejala' => $gejala,
         ]);
     }
 

@@ -13,7 +13,7 @@ const Popover = ({ title, content }) => {
         <div className="relative inline-block text-left">
             {/* Tombol untuk memicu popover */}
             <button
-                onClick={togglePopover}
+                onMouseEnter={togglePopover} onMouseLeave={togglePopover}
                 className="px-4 py-2 bg-blue-500 text-sm md:text-base text-white rounded-md hover:bg-blue-600 focus:outline-none"
             >
                 {title}
