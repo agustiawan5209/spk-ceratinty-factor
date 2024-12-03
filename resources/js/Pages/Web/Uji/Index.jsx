@@ -10,7 +10,7 @@ export default function WebIndexUji({ gejala, penyakit }) {
                     <div className="bg-white relative shadow-sm sm:rounded-lg">
                         <div className="w-full flex flex-1 relative justify-end ">
                             <div className="max-w-xs w-max p-2 md:p-4 absolute text-base text-white -top-8 left-3 shadow-lg shadow-gray-500 bg-green-600">
-                                Mulai Diagnosa Penyakit Ayam (Boiler)
+                                Mulai Diagnosa Penyakit Ayam (Broiler)
                             </div>
                         </div>
                         <FormUji

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AturanController;
 use App\Http\Controllers\Admin\GejalaController;
 use App\Http\Controllers\Admin\PengobatanController;
 use App\Http\Controllers\Admin\PenyakitController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataUjiController;
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\ProfileController;
@@ -26,9 +27,7 @@ use Inertia\Inertia;
 Route::get('/', [WebGuestController::class, 'home'])->name('home');
 Route::get('/informasi', [WebGuestController::class, 'informasi'])->name('guest.informasi');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
