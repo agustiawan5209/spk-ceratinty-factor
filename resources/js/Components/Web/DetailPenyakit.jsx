@@ -15,7 +15,7 @@ export default function DetailPenyakit({ auth, penyakit }) {
     };
     return (
         <div className="bg-white shadow-md rounded-lg">
-            <div className="max-w-screen-xl border-t-2 mt-4 px-6 py-4 mx-auto">
+            <div className="max-w-screen-full border-t-2 mt-4 px-6 py-4 mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Information Section */}
                     <div className="mt-4">

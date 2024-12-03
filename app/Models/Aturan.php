@@ -22,6 +22,7 @@ class Aturan extends Model
     {
         return $this->hasOne(Penyakit::class, 'id', 'penyakit_id');
     }
+
     public function gejala()
     {
         return $this->hasOne(Gejala::class, 'id', 'gejala_id');

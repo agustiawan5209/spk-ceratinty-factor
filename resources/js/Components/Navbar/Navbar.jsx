@@ -1,54 +1,68 @@
-import {useState} from "react";
+import { useState } from "react";
 import { Link } from "@inertiajs/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes, faSignInAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
+
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-green-500 mb-3">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a
-              className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
-              href="#pablo"
-            >
-              Sistem Pakar
-            </a>
-            <button
-              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-            >
-              <i className="fas fa-bars"></i>
-            </button>
-          </div>
-          <div
-            className={
-              "lg:flex flex-grow items-center" +
-              (navbarOpen ? " flex" : " hidden")
-            }
-            id="example-navbar-danger"
+      <nav className="fixed top-0 w-full z-50 bg-green-600 shadow-lg">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          {/* Brand */}
+          <Link className="text-2xl font-bold text-white" href={route('home')}>
+            Sistem Pakar
+          </Link>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="text-white text-2xl lg:hidden"
+            onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+            {navbarOpen ? (
+              <FontAwesomeIcon icon={faTimes} />
+            ) : (
+              <FontAwesomeIcon icon={faBars} />
+            )}
+          </button>
+
+          {/* Navbar Links */}
+          <div className={`lg:flex lg:items-center lg:space-x-6 ${navbarOpen ? "block" : "hidden"}`}>
+            <ul className="flex flex-col lg:flex-row list-none lg:space-x-6 mt-4 lg:mt-0">
               <li className="nav-item">
                 <Link
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                  className="flex border-b items-center text-white p-2 text-lg font-medium hover:bg-white hover:text-gray-800  transition duration-300"
+                  href={route('guest.informasi')}
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
+                  Informasi Penyakit
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="flex items-center bg-white p-2 rounded-md  "
                   href={route('login')}
                 >
-                  <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Login</span>
+                  <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+                  Masuk
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                  className="flex items-center text-white p-2 text-lg font-medium hover:text-gray-200 transition duration-300"
                   href={route('register')}
                 >
-                  <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Register</span>
+                  <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
+                  Register
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
       </nav>
+      {/* Placeholder to push content below fixed navbar */}
+      <div className="pt-20"></div>
     </>
   );
 }

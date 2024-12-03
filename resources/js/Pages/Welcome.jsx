@@ -29,9 +29,9 @@ export default function Welcome({ auth }) {
                                         corrupti beatae tempora aperiam quia id
                                         aliquam possimus aut.
                                     </p>
-                                    <button className="bg-green-500 text-white text-2xl font-medium px-4 py-2 rounded shadow">
+                                    <Link href={route('guest.informasi')} className="bg-green-500 text-white text-2xl font-medium px-4 py-2 rounded shadow">
                                        Baca Lebih Lanjut..
-                                    </button>
+                                    </Link>
                                 </div>
                             </header>
                         </div>

@@ -23,6 +23,9 @@ class Penyakit extends Model
     public function pengobatan(){
         return $this->hasMany(Pengobatan::class, 'penyakit_id', 'id');
     }
+    public function aturan(){
+        return $this->hasMany(Aturan::class, 'penyakit_id', 'id');
+    }
 
     public function scopeFilterBySearch($query, $search)
     {
