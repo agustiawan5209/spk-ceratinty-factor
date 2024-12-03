@@ -101,10 +101,10 @@ export default function Authenticated({ user, header, children }) {
                         </li>
                         <li className="w-full h-auto">
                             <NavLink
-                                href={route("Test.test")}
+                                href={route("Uji.index")}
                                 active={
-                                    route().current("Test.test") ||
-                                    route().current("Test.result")
+                                    route().current("Uji.index") ||
+                                    route().current("Uji.result")
                                 }
                             >
                                 <FontAwesomeIcon icon="fa-solid fa-gear" />

@@ -33,6 +33,15 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link
                   className="flex border-b items-center text-white p-2 text-lg font-medium hover:bg-white hover:text-gray-800  transition duration-300"
+                  href={route('Uji.index')}
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
+                  Mulai Diagnosa
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="flex border-b items-center text-white p-2 text-lg font-medium hover:bg-white hover:text-gray-800  transition duration-300"
                   href={route('guest.informasi')}
                 >
                   <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />

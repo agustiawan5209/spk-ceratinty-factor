@@ -23,7 +23,7 @@ const Popover = ({ title, content }) => {
             {isOpen && (
                 <div
                     ref={popoverRef}
-                    className="absolute z-10 w-full max-w-2xl mt-2 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg"
+                    className="absolute z-10 w-full max-w-full mt-2 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg"
                 >
                     <p
                         className="p-4 text-gray-700"

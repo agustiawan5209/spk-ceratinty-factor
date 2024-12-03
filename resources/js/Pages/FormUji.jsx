@@ -3,9 +3,17 @@ import { Head, useForm, Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import "react-quill/dist/quill.snow.css";
 import LoadingPage from "@/Components/LoadingPage";
-export default function FormUji({ auth, gejala }) {
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWarning } from "@fortawesome/free-solid-svg-icons";
+export default function FormUji({ gejala }) {
     const { data, setData, post, processing, errors } = useForm({
         aturan: [],
+        nama: "",
+        no_telpon: "",
+        alamat: "",
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -25,20 +33,17 @@ export default function FormUji({ auth, gejala }) {
             // Hapus item dari state jika checkbox tidak dicentang
             setTableGejala((prev) => prev.filter((s) => s.id !== item.id));
         }
-
     };
 
-    useEffect(()=>{
-        setData('aturan', tableGejala);
-    }, [tableGejala])
+    useEffect(() => {
+        setData("aturan", tableGejala);
+    }, [tableGejala]);
     const handleSubmit = (e) => {
         e.preventDefault();
 
-
-        post(route("Test.store"), {
+        post(route("Uji.store"), {
             onBefore: () => {
                 setIsLoading(true);
-
             },
             onFinish: () => {
                 setIsLoading(false);
@@ -49,7 +54,6 @@ export default function FormUji({ auth, gejala }) {
             },
         });
     };
-
 
     return (
         <>
@@ -65,12 +69,100 @@ export default function FormUji({ auth, gejala }) {
                         <h2 className="font-semibold text-2xl">
                             List Data Gejala
                         </h2>
-                        <p className="text-xs text-gray-500 mb-2">
-                            catatan: centang gejala yang ada pada penyakit yang
-                            telah dipilih
+                        <p className="text-sm text-gray-500 mb-2">
+                            catatan: Pilih <b>Ya!</b> untuk gejala terjadi pada
+                            ayam anda. Terdapat {gejala.length} Gejala anda
+                            dapat memilih lebih dari satu. <br />
+                            <FontAwesomeIcon icon={faWarning} /> Mohon Agar
+                            memilih sesuai dengan gejala yang terjadi pada hewan
+                            ternak anda, agar diagnosa dapat berjalan lebih
+                            optimal
                         </p>
                         <div className="w-full overflow-x-auto">
-                            <table className="table w-full">
+                            <div className="block space-y-4">
+                                <div>
+                                    <InputLabel
+                                        htmlFor="nama"
+                                        value="Nama Lengkap"
+                                    />
+
+                                    <TextInput
+                                        id="nama"
+                                        type="text"
+                                        name="nama"
+                                        value={data.nama}
+                                        className="mt-1 block w-full"
+                                        autoComplete="nama"
+                                        isFocused={true}
+                                        required={true}
+                                        onChange={(e) =>
+                                            setData("nama", e.target.value)
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.nama}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel
+                                        htmlFor="alamat"
+                                        value="Alamat"
+                                    />
+
+                                    <TextInput
+                                        id="alamat"
+                                        type="text"
+                                        name="alamat"
+                                        value={data.alamat}
+                                        className="mt-1 block w-full"
+                                        autoComplete="alamat"
+                                        isFocused={true}
+                                        required={true}
+                                        onChange={(e) =>
+                                            setData("alamat", e.target.value)
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.alamat}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel
+                                        htmlFor="no_telpon"
+                                        value="No. telpon"
+                                    />
+
+                                    <TextInput
+                                        id="no_telpon"
+                                        type="text"
+                                        name="no_telpon"
+                                        value={data.no_telpon}
+                                        className="mt-1 block w-full"
+                                        autoComplete="no_telpon"
+                                        isFocused={true}
+                                        required={true}
+                                        onChange={(e) =>
+                                            setData("no_telpon", e.target.value)
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.no_telpon}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                <p className="text-sm text-gray-500 mb-2">
+                                    catatan:
+                                    <FontAwesomeIcon icon={faWarning} /> Mohon
+                                    Agar untuk mengisi nama, alamat, no_telpon diatas sebelum melanjutkan
+                                </p>
+                            </div>
+                            <table className="table w-full mt-10">
                                 <colgroup>
                                     <col />
                                     <col className="w-[50%]" />
@@ -86,8 +178,8 @@ export default function FormUji({ auth, gejala }) {
                                         <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
                                             /
                                         </th>
-                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-sm font-semibold text-white border">
-                                            /
+                                        <th className="py-3 px-4 border-b border-gray-200 text-left text-xs font-semibold text-white border">
+                                            (dapat dikosongkan)
                                         </th>
                                     </tr>
                                 </thead>
@@ -168,9 +260,12 @@ export default function FormUji({ auth, gejala }) {
                             </table>
                         </div>
                     </div>
-                    <div className=" col-span-full flex items-center justify-center mt-10">
-                        <PrimaryButton className="ms-4" disabled={processing}>
-                            Simpan
+                    <div className=" col-span-full flex items-center justify-center mt-2">
+                        <PrimaryButton
+                            className="ms-4 w-full flex justify-center !text-xl"
+                            disabled={processing}
+                        >
+                            Mulai Diagnosa!
                         </PrimaryButton>
                     </div>
                 </form>

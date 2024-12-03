@@ -85,16 +85,6 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-
-    // Router Aturan
-    Route::group(['prefix' => 'test-diagnosa', 'as' => 'Test.'], function () {
-        Route::controller(DataUjiController::class)->group(function () {
-            Route::get('/', 'admin')->name('test');
-            Route::get('/hasil', 'result')->name('result');
-            Route::post('/hasil', 'store')->name('store');
-        });
-    });
-
     // Router Aturan
     Route::group(['prefix' => 'cf-diagnosa', 'as' => 'Diagnosa.'], function () {
         Route::controller(DiagnosaController::class)->group(function () {
@@ -103,10 +93,20 @@ Route::middleware('auth')->group(function () {
             Route::delete('/destroy', 'destroy')->name('destroy');
         });
     });
+});
 
 
+
+
+// Router Aturan
+Route::group(['prefix' => 'test-diagnosa', 'as' => 'Uji.'], function () {
+    Route::controller(DataUjiController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/hasil', 'result')->name('result');
+        Route::post('/hasil', 'store')->name('store');
+    });
 });
 
 Route::post('diagnosa/store', [DiagnosaController::class, 'store'])->name('Diagnosa.store');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

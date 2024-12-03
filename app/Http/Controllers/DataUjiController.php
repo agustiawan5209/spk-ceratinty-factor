@@ -2,42 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Aturan;
-use App\Models\Diagnosa;
-use App\Models\Gejala;
-use App\Models\Penyakit;
 use Carbon\Carbon;
+use Inertia\Inertia;
+use App\Models\Aturan;
+use App\Models\Gejala;
+use App\Models\Diagnosa;
+use App\Models\Penyakit;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Inertia\Inertia;
 
 class DataUjiController extends Controller
 {
-    public function admin()
+    public function index()
     {
 
-        $gejala =Gejala::all();
+        $gejala = Gejala::all();
 
-        if($gejala->count() == 0){
+        if ($gejala->count() == 0) {
             return redirect()->route('dashboard')->with('error', 'Maaf Data Gejala Tidak Boleh Kosong Untuk Melakukan Pengujian Dan Mengakses Halaman');
         }
-        return Inertia::render("Admin/Uji/Index", [
+        $data = [
             'gejala' => $gejala,
-        ]);
+        ];
+
+        if (Auth::guest()) {
+            return Inertia::render("Web/Uji/Index", $data);
+        }
+        return Inertia::render("Admin/Uji/Index", $data);
     }
 
     public function result()
     {
-        if(!Session::has('hasil')){
-            return redirect()->route('Test.test');
+        if (!Session::has('hasil')) {
+            return redirect()->route('Uji.test');
         }
         $data = Session::get('hasil');
         // dd($data);
-        return Inertia::render('Admin/Uji/Result', [
-            'dataCF'=> $data['data_cf'],
-           'aturan'=> $data['aturan'],
-           'result'=> $data['result'],
-        ]);
+        $compact = [
+            'dataCF' => $data['data_cf'],
+            'aturan' => $data['aturan'],
+            'result' => $data['result'],
+        ];
+        if (Auth::guest()) {
+            return Inertia::render("Web/Uji/Result", $compact);
+        }
+        return Inertia::render("Admin/Uji/Result", $compact);
     }
 
     public function store()
@@ -51,9 +61,9 @@ class DataUjiController extends Controller
             $tb = Aturan::where('gejala_id', $data[$i]['id'])->first();
             $aturan[$i] = [
                 'penyakit_id' => $tb->penyakit_id,
-                'penyakit'=> Penyakit::with(['galeri', 'pengobatan'])->find($tb->penyakit_id),
+                'penyakit' => Penyakit::with(['galeri', 'pengobatan'])->find($tb->penyakit_id),
                 'gejala_id' => $tb->gejala_id,
-                'gejala'=> Gejala::find($tb->gejala_id),
+                'gejala' => Gejala::find($tb->gejala_id),
                 'mb' => $tb->mb,
                 'md' => $tb->md,
                 'cf' => round($tb->cf, 4),
@@ -74,7 +84,7 @@ class DataUjiController extends Controller
             $cf[$data['penyakit_id']] += ($data['cf'] * (1 - abs($cf[$data['penyakit_id']])));
 
             $data_cf[$data['penyakit_id']] = [
-               'penyakit' => Penyakit::with(['galeri', 'pengobatan'])->find($data['penyakit_id']),
+                'penyakit' => Penyakit::with(['galeri', 'pengobatan'])->find($data['penyakit_id']),
                 'cf' => $cf[$data['penyakit_id']], // Membulatkan hasil CF
             ];
         }
@@ -93,20 +103,22 @@ class DataUjiController extends Controller
         });
 
         Session::put('hasil', array(
-            'data_cf'=> array_values($data_cf),
-            'aturan'=> $aturan,
-            'result'=> $result,
+            'data_cf' => array_values($data_cf),
+            'aturan' => $aturan,
+            'result' => $result,
         ));
 
         Diagnosa::create([
-            'nama'=> 'Admin',
-            'diagnosa'=> array(
-                'dataCF'=> array_values($data_cf),
-                'aturan'=> $aturan,
-                'result'=> $result,
+            'nama' => Request::exists('nama') ? Request::input('nama'): 'Admin',
+            'alamat' => Request::exists('alamat') ? Request::input('alamat'): '----',
+            'no_telpon' => Request::exists('no_telpon') ? Request::input('no_telpon'): '---',
+            'diagnosa' => array(
+                'dataCF' => array_values($data_cf),
+                'aturan' => $aturan,
+                'result' => $result,
             ),
-            'tgl'=> Carbon::now()->format('Y-m-d'),
+            'tgl' => Carbon::now()->format('Y-m-d'),
         ]);
-        return redirect()->route('Test.result')->with('success', 'Berhasil Menghitung CF ');
+        return redirect()->route('Uji.result')->with('success', 'Berhasil Menghitung CF ');
     }
 }

@@ -1,8 +1,10 @@
 import { Link, Head } from "@inertiajs/react";
 import Navbar from "@/Components/Navbar/Navbar";
+import FlashMessage from "@/Components/FlashMessage";
 export default function HomeLayout({ auth, children, title }) {
     return (
         <>
+        <FlashMessage />
             <Head title={title ? title : "Welcome"} />
             <Navbar></Navbar>
 
