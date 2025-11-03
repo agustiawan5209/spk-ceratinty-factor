@@ -47,32 +47,6 @@ export default function Dashboard({ auth, penyakit, gejala, aturan }) {
                                 footerClassName="bg-purple-100 text-purple-500"
                             />
                         </div>
-                        <header className="container bg-white px-4 rounded-lg lg:flex mt-10 items-center h-full lg:mt-12">
-                            <div className="w-full">
-                                <h1 className="text-4xl lg:text-6xl font-bold">
-                                    Sistem Pakar{" "}
-                                    <span className="text-green-700">
-                                        MENDIAGNOSA PENYAKIT AYAM BROILER
-                                    </span>{" "}
-                                    MENGGUNAKAN METODE CERTAINTY FACTOR
-                                </h1>
-                                <div className="w-20 h-2 bg-green-700 my-4"></div>
-                                <p className="text-xl mb-10">
-                                    Metode certainty factor (CF) adalah metode
-                                    yang mengukur kepastian terhadap suatu fakta
-                                    atau aturan untuk menggambarkan keyakinan
-                                    seorang pakar terhadap suatu masalah. Metode
-                                    ini dapat digunakan untuk mengatasi
-                                    ketidakpastian yang mungkin timbul saat
-                                    seorang pakar mengungkapkan informasi yang
-                                    tidak pasti. Metode CF dapat digunakan dalam
-                                    berbagai bidang, seperti: Diagnosa penyakit
-                                    saraf tulang belakang, Diagnosa gangguan
-                                    mental pada anak, Diagnosa penyakit tanaman
-                                    buah naga.
-                                </p>
-                            </div>
-                        </header>
                     </div>
                 </div>
             </div>

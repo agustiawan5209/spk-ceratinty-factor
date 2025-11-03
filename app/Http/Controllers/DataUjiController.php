@@ -50,15 +50,16 @@ class DataUjiController extends Controller
         return Inertia::render("Admin/Uji/Result", $compact);
     }
 
-    public function store()
-    {
-        Request::validate(['aturan' => 'required|array']);
-        $data = Request::input('aturan');
+   public function store()
+{
+    Request::validate(['aturan' => 'required|array']);
+    $data = Request::input('aturan');
 
-        $length = count($data);
-        $aturan = [];
-        for ($i = 0; $i < $length; $i++) {
-            $tb = Aturan::where('gejala_id', $data[$i]['id'])->first();
+    // 1. Ambil data aturan dari database
+    $aturan = [];
+    foreach ($data as $i => $item) {
+        $tb = Aturan::where('gejala_id', $item['id'])->first();
+        if ($tb) {
             $aturan[$i] = [
                 'penyakit_id' => $tb->penyakit_id,
                 'penyakit' => Penyakit::with(['galeri', 'pengobatan'])->find($tb->penyakit_id),
@@ -69,56 +70,67 @@ class DataUjiController extends Controller
                 'cf' => round($tb->cf, 4),
             ];
         }
-        $result = [];
-        $data_cf = [];
-        $cf = [];
-        for ($i = 0; $i < count($aturan); $i++) {
-            $data = $aturan[$i];
+    }
 
-            if (empty($cf[$data['penyakit_id']])) {
-                $cf[$data['penyakit_id']] = 0;
+    // 2. Kelompokkan gejala berdasarkan penyakit
+    $gejalaByPenyakit = [];
+    foreach ($aturan as $item) {
+        $gejalaByPenyakit[$item['penyakit_id']][] = $item;
+    }
+
+    // 3. Hitung CF untuk setiap penyakit
+    $hasilCF = [];
+    foreach ($gejalaByPenyakit as $penyakitId => $gejalaList) {
+        $cfCombine = 0;
+        
+        foreach ($gejalaList as $index => $gejala) {
+            if ($index == 0) {
+                // Gejala pertama
+                $cfCombine = $gejala['cf'];
+            } else {
+                // Kombinasi dengan gejala berikutnya
+                $cfCombine = $cfCombine + ($gejala['cf'] * (1 - $cfCombine));
             }
-            if ($i == 0) {
-                $cf[$data['penyakit_id']] = $data['cf'];
-            }
-            $cf[$data['penyakit_id']] += ($data['cf'] * (1 - abs($cf[$data['penyakit_id']])));
-
-            $data_cf[$data['penyakit_id']] = [
-                'penyakit' => Penyakit::with(['galeri', 'pengobatan'])->find($data['penyakit_id']),
-                'cf' => $cf[$data['penyakit_id']], // Membulatkan hasil CF
-            ];
         }
-        // Hasil perhitungan CF untuk setiap penyakit
-        $result = [];
-        foreach ($data_cf as $penyakit_id => $cf) {
-            $result[] = [
-                'penyakit' => $cf['penyakit'],
-                'cf' => round($cf['cf'], 4), // Membulatkan hasil CF
-            ];
-        }
+        
+        $hasilCF[$penyakitId] = [
+            'penyakit' => Penyakit::with(['galeri', 'pengobatan'])->find($penyakitId),
+            'cf' => round($cfCombine, 4),
+        ];
+    }
 
-        // Mengurutkan hasil berdasarkan CF tertinggi
-        usort($result, function ($a, $b) {
-            return $b['cf'] <=> $a['cf'];
-        });
+    // 4. Urutkan berdasarkan CF tertinggi
+    $result = [];
+    foreach ($hasilCF as $penyakitId => $data) {
+        $result[] = [
+            'penyakit' => $data['penyakit'],
+            'cf' => $data['cf'],
+        ];
+    }
 
-        Session::put('hasil', array(
-            'data_cf' => array_values($data_cf),
+    usort($result, function ($a, $b) {
+        return $b['cf'] <=> $a['cf'];
+    });
+
+    // 5. Simpan session dan database
+    Session::put('hasil', [
+        'data_cf' => array_values($hasilCF),
+        'aturan' => $aturan,
+        'result' => $result,
+    ]);
+
+    Diagnosa::create([
+        'nama' => Request::exists('nama') ? Request::input('nama') : 'Admin',
+        'alamat' => Request::exists('alamat') ? Request::input('alamat') : '----',
+        'no_telpon' => Request::exists('no_telpon') ? Request::input('no_telpon') : '---',
+        'diagnosa' => [
+            'dataCF' => array_values($hasilCF),
             'aturan' => $aturan,
             'result' => $result,
-        ));
+        ],
+        'tgl' => Carbon::now()->format('Y-m-d'),
+    ]);
 
-        Diagnosa::create([
-            'nama' => Request::exists('nama') ? Request::input('nama'): 'Admin',
-            'alamat' => Request::exists('alamat') ? Request::input('alamat'): '----',
-            'no_telpon' => Request::exists('no_telpon') ? Request::input('no_telpon'): '---',
-            'diagnosa' => array(
-                'dataCF' => array_values($data_cf),
-                'aturan' => $aturan,
-                'result' => $result,
-            ),
-            'tgl' => Carbon::now()->format('Y-m-d'),
-        ]);
-        return redirect()->route('Uji.result')->with('success', 'Berhasil Menghitung CF ');
-    }
+    return redirect()->route('Uji.result')->with('success', 'Berhasil Menghitung CF');
+}
 }
