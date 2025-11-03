@@ -21,10 +21,10 @@ export default function Welcome({ auth }) {
                                         MENGGUNAKAN METODE CERTAINTY FACTOR
                                     </h1>
                                     <div className="w-20 h-2 bg-green-700 my-4"></div>
-                                    <p className="text-xl mb-10">
+                                    {/* <p className="text-xl mb-10">
                                     Metode certainty factor (CF) adalah metode yang mengukur kepastian terhadap suatu fakta atau aturan untuk menggambarkan keyakinan seorang pakar terhadap suatu masalah. Metode ini dapat digunakan untuk mengatasi ketidakpastian yang mungkin timbul saat seorang pakar mengungkapkan informasi yang tidak pasti.
                                     Metode CF dapat digunakan dalam berbagai bidang, seperti: Diagnosa penyakit saraf tulang belakang, Diagnosa gangguan mental pada anak, Diagnosa penyakit tanaman buah naga.
-                                    </p>
+                                    </p> */}
                                     <Link href={route('guest.informasi')} className="bg-green-500 text-white text-2xl font-medium px-4 py-2 rounded shadow">
                                        Baca Lebih Lanjut..
                                     </Link>
